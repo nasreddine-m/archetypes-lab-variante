@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Variante">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#1c2846">
+<meta name="theme-color" content="#0f2a2e">
 <meta name="robots" content="noindex">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <title>Archétypes — Déclaratif & Observation</title>
 <style>
   :root {
-    --bg: #1c2846;
-    --card: #27365e;
-    --card-soft: #33447a;
-    --accent: #ebcfa9;
-    --accent-soft: rgba(235, 207, 169, 0.16);
-    --accent-ink: #1c2846;
-    --accent-2: #8fb8f5;
-    --text: #f6f8fd;
-    --muted: #b4c0d6;
+    --bg: #0f2a2e;
+    --card: #17393e;
+    --card-soft: #214a50;
+    --accent: #ffb88a;
+    --accent-soft: rgba(255, 184, 138, 0.16);
+    --accent-ink: #0f2a2e;
+    --accent-2: #8fd3c8;
+    --text: #f4f7f6;
+    --muted: #a9c2c0;
     --border: rgba(255, 255, 255, 0.13);
     --success: #34d399;
     --danger: #f87171;
@@ -477,16 +477,16 @@
   /* Surfaces crème : la classe .paper change localement les variables de couleur (fond crème, texte bleu nuit, accent bleu nuit).
      Tout ce qui lit var(--text), var(--accent)… s'adapte sans règle supplémentaire. Alternance bleu nuit / crème sur toutes les pages. */
   .paper {
-    --bg: #fbf8f3;
+    --bg: #f6f0e6;
     --card: #ffffff;
-    --card-soft: #f0e7d8;
-    --accent: #1c2846;
-    --accent-soft: rgba(28, 40, 70, 0.09);
-    --accent-ink: #ebcfa9;
+    --card-soft: #ece3d2;
+    --accent: #0f2a2e;
+    --accent-soft: rgba(15, 42, 46, 0.09);
+    --accent-ink: #ffb88a;
     --accent-2: #4079bf;
-    --text: #1c2846;
-    --muted: #5b6482;
-    --border: rgba(28, 40, 70, 0.16);
+    --text: #0f2a2e;
+    --muted: #4d6866;
+    --border: rgba(15, 42, 46, 0.16);
     --danger: #b3261e;
     --c-coral: #b55558; --c-orange: #904100; --c-amber: #9d6d00; --c-citron: #665d00;
     --c-tilleul: #558736; --c-sauge: #006f41; --c-turquoise: #008e88; --c-ciel: #00698b;
@@ -496,7 +496,7 @@
   }
   body.theme-women .paper { --bg: #fcf6f6; --accent: #3b2543; --accent-ink: #f3d2b3; --text: #3b2543; --card-soft: #f3e6e6; --muted: #6b5a73; --border: rgba(59, 37, 67, 0.16); }
   .card.paper { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); border-color: transparent; }
-  .card.paper .btn-primary, .paper .btn-primary { box-shadow: 0 4px 12px rgba(28, 40, 70, 0.22); }
+  .card.paper .btn-primary, .paper .btn-primary { box-shadow: 0 4px 12px rgba(15, 42, 46, 0.22); }
   .paper .len-btn.active { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
   .paper .len-btn.active .len-desc { color: var(--accent-ink); opacity: 0.8; }
   .paper .radar-paper { background: transparent; box-shadow: none; padding: 0; }
@@ -522,7 +522,7 @@
   .home-btn svg { display: block; flex: none; }
 
   /* Page d'accueil */
-  .radar-paper { background: #fbf8f3; border-radius: 18px; padding: 10px; max-width: 400px; margin: 0 auto; box-shadow: 0 6px 18px rgba(0,0,0,0.22); }
+  .radar-paper { background: #f6f0e6; border-radius: 18px; padding: 10px; max-width: 400px; margin: 0 auto; box-shadow: 0 6px 18px rgba(0,0,0,0.22); }
   .radar-paper canvas { display: block; width: 100%; height: auto; }
   .land-hero { text-align: center; padding: 4px 0 28px; }
   .orb { width: min(82vw, 340px); margin: 0 auto 18px; }
@@ -583,40 +583,41 @@
     *, *::before, *::after { animation: none !important; transition: none !important; }
   }
 
-  /* ================= VARIANTE ÉDITORIALE =================
-     Même contenu, mêmes fonctions. Direction : carnet / revue.
-     Titres en empattements, filets fins au lieu de cartes, angles quasi droits (2 à 3 px), boutons rectangulaires,
-     mise en page décalée (texte aligné à gauche, blocs en quinconce, rosace qui déborde). Aucune ombre décorative. */
-  :root { --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif; }
+  /* ================= VARIANTE ÉDITORIALE (v2) =================
+     Même contenu, mêmes fonctions. Direction : carnet moderne.
+     Filets fins au lieu de cartes, angles quasi droits (2 px), boutons rectangulaires, titres en sans-serif serrés.
+     Les éléments de même rang ont toujours la même taille : l'asymétrie vient de la hiérarchie (titres à gauche, grandes
+     échelles, bandes alternées), jamais de décalages. */
+  :root { --display: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Roboto, sans-serif; }
   .brand, .land-title, .land-h, .land-h3, .card-title, .hero-title, .fiche-name, .q-text, .step h3, .step-num,
-  .uni-card h3, .type-name, .rank-name, .len-num, .lead, .history-title, .land-lead { font-family: var(--serif); }
+  .uni-card h3, .type-name, .rank-name, .len-num, .lead, .history-title, .land-lead, .seg-btn, .btn-primary, .opt-letter, .rank-num, .fiche-h { font-family: var(--display); }
 
   /* En-tête */
   header { padding: 10px 0 12px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
-  .brand { font-size: 22px; font-weight: 600; letter-spacing: 0; }
+  .brand { font-size: 21px; font-weight: 600; letter-spacing: -0.4px; }
   .badge-pill { border: none; border-left: 2px solid var(--accent); border-radius: 0; background: none; padding: 2px 0 2px 8px; font-size: 13px; }
   .home-btn { background: none; border: none; border-bottom: 1px solid var(--accent); border-radius: 0; padding: 6px 2px; min-height: 40px; }
   .home-btn:active { transform: none; opacity: 0.7; }
 
-  /* Univers : onglets soulignés au lieu d'une pastille */
-  .segmented { display: flex; gap: 26px; background: none; border: none; border-bottom: 1px solid var(--border); border-radius: 0; padding: 0; margin-bottom: 22px; }
-  .seg-btn { flex: none; min-height: 44px; padding: 8px 0; border-radius: 0; background: none; border-bottom: 3px solid transparent; margin-bottom: -1px; font-family: var(--serif); font-size: 18px; font-weight: 500; text-align: left; }
-  .seg-btn.active { background: none; box-shadow: none; color: var(--text); border-bottom-color: var(--accent); }
-  .lead { font-size: 19px; line-height: 1.4; max-width: 30ch; font-style: italic; }
+  /* Univers : deux onglets de même largeur, soulignés */
+  .segmented { display: flex; gap: 0; background: none; border: none; border-bottom: 1px solid var(--border); border-radius: 0; padding: 0; margin-bottom: 22px; }
+  .seg-btn { flex: 1; min-height: 46px; padding: 8px 0; border-radius: 0; background: none; border-bottom: 3px solid transparent; margin-bottom: -1px; font-size: 16px; font-weight: 500; text-align: left; }
+  .seg-btn.active { background: none; box-shadow: none; color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+  .lead { font-size: 18px; line-height: 1.4; max-width: 32ch; }
 
-  /* Cartes : des sections ouvertes, séparées par un filet */
+  /* Cartes : sections ouvertes séparées par un filet */
   .card { background: none; border: none; border-top: 1px solid var(--border); border-radius: 0; box-shadow: none; padding: 22px 0 6px; margin-bottom: 26px; }
   .card.settings { padding: 4px 0 0; }
-  .card-title { font-size: 24px; font-weight: 500; letter-spacing: -0.2px; margin-bottom: 14px; }
+  .card-title { font-size: 22px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 14px; }
   .card.paper { background: var(--bg); color: var(--text); margin-left: -20px; margin-right: -20px; padding: 28px 20px 20px; border: none; border-radius: 0; box-shadow: 0 0 0 100vmax var(--bg); clip-path: inset(0 -100vmax); }
 
-  /* Longueur de session : trois tranches à filet supérieur, la première plus large */
-  .len-grid { grid-template-columns: 1.5fr 1fr 1fr; gap: 14px; }
+  /* Longueur de session : trois colonnes égales à filet supérieur */
+  .len-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .len-btn, .paper .len-btn.active { background: none; border: none; border-top: 3px solid var(--border); border-radius: 0; text-align: left; padding: 12px 0 4px; color: var(--text); }
   .len-btn:hover, .len-btn.active, .paper .len-btn.active { border-top-color: var(--accent); }
   .len-btn:active { transform: none; }
   .paper .len-btn.active .len-desc { color: var(--muted); opacity: 1; }
-  .len-num { font-size: 38px; font-weight: 400; }
+  .len-num { font-size: 36px; font-weight: 500; letter-spacing: -1px; }
   .len-btn.active .len-name { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
 
   /* Réglages */
@@ -628,8 +629,8 @@
   .slider { border-radius: 3px; }
   .slider:before { border-radius: 1px; }
 
-  /* Boutons : rectangulaires, flèche dessinée, plus de pastille */
-  .btn-primary { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 54px; padding: 14px 18px; border-radius: 2px; box-shadow: none; text-align: left; font-family: var(--serif); font-size: 19px; font-weight: 500; }
+  /* Boutons rectangulaires, flèche dessinée */
+  .btn-primary { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 54px; padding: 14px 18px; border-radius: 2px; box-shadow: none; text-align: left; font-size: 17px; font-weight: 600; letter-spacing: -0.2px; }
   .btn-primary::after { content: ""; flex: none; width: 22px; height: 12px; background: currentColor; clip-path: polygon(0 5.2px, 16px 5.2px, 16px 0, 22px 6px, 16px 12px, 16px 6.8px, 0 6.8px); }
   .btn-primary:hover { filter: none; background: color-mix(in srgb, var(--accent) 88%, #fff); }
   .btn-primary:active { transform: none; opacity: 0.85; }
@@ -639,62 +640,72 @@
   .btn-quiet { margin: 6px 0 0; padding-left: 0; text-align: left; border-radius: 0; text-decoration: underline; text-underline-offset: 4px; }
   .cta-bar { background: var(--bg); border-top: 1px solid var(--border); padding: 12px 20px calc(10px + env(safe-area-inset-bottom)); margin: 8px -20px 0; }
 
-  /* Questions : lignes à filets au lieu de boîtes */
+  /* Questions : lignes à filets */
   .progress-bar { height: 3px; border-radius: 0; margin-bottom: 24px; }
   .progress-fill { border-radius: 0; }
   .timer-pill { border-radius: 0; background: none; border-left: 2px solid var(--accent); padding: 0 0 0 8px; }
   .timer-pill.urgent { background: none; }
   .card.q-card { padding: 18px 0 0; border-top: 3px solid var(--accent); }
-  .q-text { font-size: 25px; font-weight: 500; line-height: 1.28; letter-spacing: -0.3px; margin: 0 0 22px; max-width: 20em; }
+  .q-text { font-size: 24px; font-weight: 600; line-height: 1.22; letter-spacing: -0.6px; margin: 0 0 22px; max-width: 20em; }
   .option-btn { background: none; border: none; border-top: 1px solid var(--border); border-radius: 0; margin: 0; padding: 16px 4px 16px 0; min-height: 60px; align-items: baseline; }
   .option-btn:last-child { border-bottom: 1px solid var(--border); margin-bottom: 18px; }
   .option-btn:hover { border-color: var(--border); background: var(--accent-soft); }
   .option-btn:active { transform: none; background: var(--accent-soft); }
-  .opt-letter { width: 26px; height: auto; background: none; border-radius: 0; justify-content: flex-start; font-family: var(--serif); font-size: 22px; font-weight: 500; color: var(--accent); }
+  .opt-letter { width: 26px; height: auto; background: none; border-radius: 0; justify-content: flex-start; font-size: 17px; font-weight: 600; color: var(--accent); }
   .opt-label { font-size: 17px; }
 
   /* Résultats */
   .hero-result { text-align: left; background: none; border: none; border-left: 3px solid var(--accent); border-radius: 0; padding: 4px 0 4px 16px; margin-bottom: 24px; }
-  .hero-title { font-size: 36px; font-weight: 500; letter-spacing: -0.5px; line-height: 1.08; }
-  .duo-banner { border: none; border-left: 3px solid var(--accent); border-radius: 0; background: var(--accent-soft); padding: 12px 14px; }
+  .hero-title { font-size: 34px; font-weight: 600; letter-spacing: -1px; line-height: 1.08; }
+  .duo-banner { border: none; border-left: 3px solid var(--accent); border-radius: 0; background: var(--card); padding: 12px 14px; }
   .radar-paper { border-radius: 0; box-shadow: none; padding: 0; background: transparent; }
-  .rank-num { border-radius: 0; background: none; color: var(--muted); font-family: var(--serif); font-size: 18px; width: 24px; }
+  .rank-num { border-radius: 0; background: none; color: var(--muted); font-size: 15px; width: 24px; }
   .rank-num.top { background: none; color: var(--accent); }
   .rank-bar, .rank-bar i { border-radius: 0; }
   .rank-bar { height: 4px; }
   .rank-item[role="button"] { border-radius: 0; }
-  .types-row { grid-template-columns: 1.2fr 1fr; gap: 16px; align-items: start; }
+  .types-row { grid-template-columns: 1fr 1fr; gap: 16px; align-items: stretch; }
   .type-btn { align-items: flex-start; background: none; border: none; border-top: 3px solid var(--accent); border-radius: 0; padding: 12px 0 4px; text-align: left; }
-  .type-btn:nth-child(2) { margin-top: 26px; }
   .type-btn:active { transform: none; opacity: 0.8; }
-  .type-name { text-align: left; font-size: 19px; font-weight: 500; }
+  .type-name { text-align: left; font-size: 18px; font-weight: 600; letter-spacing: -0.3px; }
   .fiche-head { text-align: left; }
   .fiche-stamp { margin: 4px 0 14px; }
-  .fiche-name { font-size: 34px; font-weight: 500; }
-  .fiche-h { font-family: var(--serif); font-size: 18px; font-weight: 500; }
+  .fiche-name { font-size: 32px; font-weight: 600; letter-spacing: -0.9px; }
+  .fiche-h { font-size: 16px; font-weight: 600; }
 
-  /* Accueil : texte à gauche, rosace qui déborde à droite */
-  .land-hero { display: flex; flex-direction: column; align-items: flex-start; text-align: left; margin: 0 -20px; padding: 6px 20px 40px; overflow: clip; }
-  .land-title { order: 1; font-size: 46px; font-weight: 500; line-height: 1.02; letter-spacing: -0.8px; max-width: 8em; margin: 0 0 14px; }
-  .land-lead { order: 2; margin: 0; max-width: 28ch; font-size: 18px; color: var(--muted); }
-  .orb { order: 3; width: 118%; max-width: none; align-self: flex-end; margin: 10px -84px 18px 0; filter: none; }
-  .land-hero .btn-primary { order: 4; width: auto; min-width: 250px; max-width: none; }
+  /* Accueil : titre à gauche, rosace entière */
+  .land-hero { display: flex; flex-direction: column; align-items: flex-start; text-align: left; margin: 0 -20px; padding: 6px 20px 40px; }
+  .land-title { order: 1; font-size: 44px; font-weight: 600; line-height: 1.02; letter-spacing: -1.6px; max-width: 8em; margin: 0 0 14px; }
+  .land-lead { order: 2; margin: 0; max-width: 30ch; font-size: 17px; color: var(--muted); }
+  .orb { order: 3; width: min(100%, 380px); align-self: center; margin: 22px 0 22px; filter: none; }
+  .land-hero .btn-primary { order: 4; width: 100%; max-width: none; }
   .land-hero .btn-quiet { order: 5; }
   .land-sec { padding: 44px 20px; }
-  .land-h { font-size: 32px; font-weight: 500; letter-spacing: -0.4px; margin-bottom: 16px; }
-  .land-h3 { font-size: 21px; font-weight: 500; }
-  .land-h .ico { align-self: baseline; transform: translateY(3px); }
-  .step-num { font-size: 60px; font-weight: 400; width: 64px; }
-  .step h3 { font-size: 21px; font-weight: 500; }
+  .land-h { font-size: 30px; font-weight: 600; letter-spacing: -1px; margin-bottom: 16px; }
+  .land-h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.4px; }
+  .land-h .ico { align-self: center; }
+  .step-num { font-size: 52px; font-weight: 500; letter-spacing: -2px; width: 60px; }
+  .step h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.4px; }
   .uni-grid { gap: 14px; }
   .uni-card { border: none; border-top: 3px solid var(--c); border-radius: 0; padding: 18px 18px 16px; }
   .uni-card:active { transform: none; opacity: 0.85; }
-  .uni-card:nth-child(2) { margin-left: 30px; }
-  .uni-card h3 { font-size: 24px; font-weight: 500; }
+  .uni-card h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.6px; }
   .dots span { width: 9px; height: 22px; border-radius: 0; }
   .land-end { text-align: left; }
   .with-ico.center { margin-left: 0; justify-content: flex-start; }
-  .land-end .btn-primary { max-width: none; width: auto; min-width: 250px; }
+  .land-end .btn-primary { max-width: none; width: 100%; }
+
+  /* Palette « Nuit verte et abricot » */
+  :root {
+    --bg: #0f2a2e; --card: #17393e; --card-soft: #214a50;
+    --accent: #ffb88a; --accent-soft: rgba(255, 184, 138, 0.16); --accent-ink: #0f2a2e; --accent-2: #8fd3c8;
+    --text: #f4f7f6; --muted: #a9c2c0; --border: rgba(255, 255, 255, 0.13);
+  }
+  .paper {
+    --bg: #f6f0e6; --card: #fffdf8; --card-soft: #ece3d2;
+    --accent: #0f2a2e; --accent-soft: rgba(15, 42, 46, 0.09); --accent-ink: #ffb88a; --accent-2: #2f7f78;
+    --text: #0f2a2e; --muted: #4d6866; --border: rgba(15, 42, 46, 0.16);
+  }
 </style>
 </head>
 <body>
