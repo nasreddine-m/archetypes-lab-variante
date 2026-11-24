@@ -1,0 +1,60 @@
+
+=== 12 Archétypes : 50 questions, 200 options ===
+Apparitions primaires attendues si équilibré : 16.7 par archétype
+Archétype          prim  sec  poids  écart/idéal
+Sage                 35   11     81  +62%
+Souverain            29   19     77  +54%
+Magicien             21   26     68  +36%
+Explorateur          25   14     64  +28%
+Hors-la-loi          19   23     61  +22%
+Créateur             14   20     48  -4%
+Héros                12   21     45  -10%
+Protecteur           14   17     45  -10%
+Homme ordinaire      12   11     35  -30%
+Amoureux              8   11     27  -46%
+Bouffon               9    9     27  -46%
+Innocent              2   18     22  -56%
+Rapport max/min des poids : 3.68
+Taille des pools : {"decl":25,"obs":25,"dilemme":15,"miroir":10}  <-- miroir <= 10 : aucun tirage aléatoire possible
+
+--- Simulation 12 Archétypes : 20000 répondants aléatoires (10 q.) ---
+Part attendue si équilibré : 8.3% chacun
+Égalité en tête : brut 22.4%  |  ajusté 9.4%
+Archétype             brut   ajusté
+Bouffon               1.0%    12.9%
+Amoureux              1.1%    11.5%
+Innocent              0.3%    10.9%
+Homme ordinaire       2.4%    10.0%
+Héros                 3.4%     8.5%
+Créateur              5.3%     8.1%
+Protecteur            5.2%     7.1%
+Explorateur          14.8%     6.9%
+Hors-la-loi          10.0%     6.8%
+Sage                 23.8%     5.9%
+Magicien             13.1%     5.8%
+Souverain            19.7%     5.6%
+
+=== 7 Déesses : 50 questions, 200 options ===
+Apparitions primaires attendues si équilibré : 28.6 par archétype
+Archétype          prim  sec  poids  écart/idéal
+Athéna               43   27    113  +32%
+Artémis              38   20     96  +12%
+Aphrodite            35   17     87  +2%
+Hestia               28   27     83  -3%
+Déméter              28   20     76  -11%
+Héra                 13   49     75  -12%
+Perséphone           15   40     70  -18%
+Rapport max/min des poids : 1.61
+Taille des pools : {"decl":25,"obs":25,"dilemme":15,"miroir":11} 
+
+--- Simulation 7 Déesses : 20000 répondants aléatoires (10 q.) ---
+Part attendue si équilibré : 14.3% chacun
+Égalité en tête : brut 20.0%  |  ajusté 3.6%
+Archétype             brut   ajusté
+Déméter              10.6%    15.9%
+Artémis              19.1%    15.7%
+Aphrodite            15.5%    15.3%
+Hestia               12.0%    15.1%
+Perséphone            5.9%    13.6%
+Athéna               31.2%    12.5%
+Héra                  5.6%    12.0%

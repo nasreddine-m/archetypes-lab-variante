@@ -1,0 +1,46 @@
+
+12 Archétypes — signal p = 0.5 (part de réponses guidées par le vrai profil)
+questions    top1 retrouvé  dans le top 2   test-retest top1
+5                     27 %           45 %               16 %
+10                    38 %           58 %               23 %
+15                    46 %           67 %               31 %
+20                    53 %           76 %               37 %
+25                    57 %           80 %               43 %
+30                    62 %           85 %               51 %
+40                    67 %           90 %               57 %
+50                    71 %           95 %               61 %
+
+7 Déesses — signal p = 0.5 (part de réponses guidées par le vrai profil)
+questions    top1 retrouvé  dans le top 2   test-retest top1
+5                     50 %           72 %               33 %
+10                    65 %           83 %               49 %
+15                    75 %           92 %               61 %
+20                    79 %           94 %               68 %
+25                    83 %           97 %               73 %
+30                    85 %           98 %               77 %
+40                    88 %           99 %               82 %
+50                    90 %           99 %               86 %
+
+12 Archétypes — signal p = 0.7 (part de réponses guidées par le vrai profil)
+questions    top1 retrouvé  dans le top 2   test-retest top1
+5                     35 %           58 %               20 %
+10                    52 %           74 %               35 %
+15                    61 %           84 %               49 %
+20                    67 %           90 %               56 %
+25                    71 %           93 %               62 %
+30                    73 %           96 %               67 %
+40                    75 %           98 %               71 %
+50                    79 %           99 %               74 %
+
+7 Déesses — signal p = 0.7 (part de réponses guidées par le vrai profil)
+questions    top1 retrouvé  dans le top 2   test-retest top1
+5                     64 %           84 %               50 %
+10                    78 %           93 %               67 %
+15                    84 %           98 %               77 %
+20                    88 %           99 %               82 %
+25                    90 %          100 %               86 %
+30                    91 %          100 %               87 %
+40                    93 %          100 %               88 %
+50                    94 %          100 %               92 %
+
+Repère : au hasard pur, top1 retrouvé = 8 % (monde 12) ou 14 % (monde 7).

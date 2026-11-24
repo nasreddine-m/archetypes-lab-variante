@@ -1,0 +1,74 @@
+
+=== 12 Archétypes : 100 questions, 400 options ===
+Apparitions primaires attendues si équilibré : 33.3 par archétype
+Archétype          prim  sec  poids  écart/idéal
+Homme ordinaire      33   46    112  +12%
+Innocent             26   59    111  +11%
+Protecteur           32   45    109  +9%
+Explorateur          37   29    103  +3%
+Sage                 42   17    101  +1%
+Amoureux             33   33     99  -1%
+Héros                31   35     97  -3%
+Magicien             32   32     96  -4%
+Créateur             31   34     96  -4%
+Souverain            37   21     95  -5%
+Bouffon              34   23     91  -9%
+Hors-la-loi          32   26     90  -10%
+Rapport max/min des poids : 1.24
+Taille des pools : {"decl":50,"obs":50,"dilemme":27,"miroir":22} 
+
+--- Simulation 12 Archétypes : 20000 répondants aléatoires (10 q.) ---
+Part attendue si équilibré : 8.3% chacun
+Égalité en tête : brut 26.5%  |  ajusté 9.1%
+Archétype             brut   ajusté
+Bouffon               6.0%    10.2%
+Souverain             9.6%     9.6%
+Hors-la-loi           7.3%     9.5%
+Sage                 12.7%     9.4%
+Amoureux              6.5%     8.9%
+Créateur              6.7%     8.6%
+Explorateur          11.1%     8.2%
+Magicien              8.1%     8.0%
+Héros                 7.3%     7.9%
+Homme ordinaire       8.0%     7.1%
+Protecteur            8.2%     6.8%
+Innocent              8.6%     5.9%
+
+=== 7 Déesses : 100 questions, 400 options ===
+Apparitions primaires attendues si équilibré : 57.1 par archétype
+Archétype          prim  sec  poids  écart/idéal
+Athéna               62   55    179  +4%
+Déméter              59   59    177  +3%
+Perséphone           49   79    177  +3%
+Hestia               57   62    176  +3%
+Héra                 45   79    169  -1%
+Aphrodite            65   32    162  -5%
+Artémis              63   34    160  -7%
+Rapport max/min des poids : 1.12
+Taille des pools : {"decl":50,"obs":50,"dilemme":28,"miroir":21} 
+
+--- Simulation 7 Déesses : 20000 répondants aléatoires (10 q.) ---
+Part attendue si équilibré : 14.3% chacun
+Égalité en tête : brut 21.7%  |  ajusté 3.8%
+Archétype             brut   ajusté
+Artémis              13.4%    16.9%
+Aphrodite            13.2%    16.3%
+Déméter              15.2%    14.2%
+Hestia               15.6%    14.1%
+Athéna               17.9%    13.8%
+Héra                 11.1%    12.5%
+Perséphone           13.7%    12.2%
+
+--- Par mode, 12 Archétypes (ajusté ; idéal 8.3% chacun) ---
+Déclaratif  n= 50  min 5.3% (Innocent)  max 10.7% (Hors-la-loi)
+Observation n= 50  min 5.8% (Innocent)  max 10.1% (Souverain)
+Dilemmes    n= 27  min 4.9% (Innocent)  max 13.6% (Amoureux)
+Miroir      n= 22  min 6.3% (Innocent)  max 10.3% (Protecteur)
+Intégral    n=100  min 6.1% (Innocent)  max 10.7% (Bouffon)
+
+--- Par mode, 7 Déesses (ajusté ; idéal 14.3% chacun) ---
+Déclaratif  n= 50  min 12.5% (Héra)  max 16.3% (Artémis)
+Observation n= 50  min 11.0% (Perséphone)  max 16.6% (Aphrodite)
+Dilemmes    n= 28  min 12.0% (Héra)  max 18.4% (Aphrodite)
+Miroir      n= 21  min 10.4% (Perséphone)  max 16.4% (Artémis)
+Intégral    n=100  min 12.3% (Héra)  max 16.8% (Artémis)

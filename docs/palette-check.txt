@@ -1,0 +1,41 @@
+
+Version SOMBRE (L=0,80 ; C=0,115) — fond #1c2846
+  Héros            corail     #ffafaf  contraste 8.81:1
+  Créateur         orange     #e8986a  contraste 6.33:1
+  Souverain        ambre      #f5c572  contraste 9.13:1
+  Bouffon          citron     #b9b256  contraste 6.63:1
+  Homme ordinaire  tilleul    #addf92  contraste 9.53:1
+  Protecteur       sauge      #65c495  contraste 6.88:1
+  Explorateur      turquoise  #64e6de  contraste 9.64:1
+  Innocent         ciel       #46bfe0  contraste 6.77:1
+  Sage             bleu       #9ad1ff  contraste 9.23:1
+  Magicien         indigo     #a6a3f4  contraste 6.38:1
+  Hors-la-loi      magenta    #eab7ff  contraste 8.85:1
+  Amoureux         rose       #e58fb8  contraste 6.21:1
+  contraste minimal 6.21:1 OK (≥ 3:1)
+  écart minimal entre deux teintes : 10.6 (Souverain / Homme ordinaire)
+  sous protanopie : 3.6 (Héros / Protecteur)
+  sous deutéranopie : 1.5 (Créateur / Bouffon)
+  sous tritanopie : 2.8 (Créateur / Amoureux)
+
+Version PAPIER (L=0,52 ; C=0,125) — fond #fbf8f3
+  Héros            corail     #b55558  contraste 4.49:1
+  Créateur         orange     #904100  contraste 6.77:1
+  Souverain        ambre      #9d6d00  contraste 4.29:1
+  Bouffon          citron     #665d00  contraste 6.37:1
+  Homme ordinaire  tilleul    #558736  contraste 4.03:1
+  Protecteur       sauge      #006f41  contraste 6.05:1
+  Explorateur      turquoise  #008e88  contraste 3.96:1
+  Innocent         ciel       #00698b  contraste 6.19:1
+  Sage             bleu       #4079bf  contraste 4.23:1
+  Magicien         indigo     #554d9d  contraste 6.72:1
+  Hors-la-loi      magenta    #935faa  contraste 4.47:1
+  Amoureux         rose       #8c3865  contraste 6.92:1
+  contraste minimal 3.96:1 OK (≥ 3:1)
+  écart minimal entre deux teintes : 11.4 (Souverain / Bouffon)
+  sous protanopie : 3.4 (Héros / Protecteur)
+  sous deutéranopie : 0.3 (Créateur / Bouffon)
+  sous tritanopie : 2.7 (Protecteur / Innocent)
+
+JSON sombre : {"Héros":"#ffafaf","Créateur":"#e8986a","Souverain":"#f5c572","Bouffon":"#b9b256","Homme ordinaire":"#addf92","Protecteur":"#65c495","Explorateur":"#64e6de","Innocent":"#46bfe0","Sage":"#9ad1ff","Magicien":"#a6a3f4","Hors-la-loi":"#eab7ff","Amoureux":"#e58fb8"}
+JSON papier : {"Héros":"#b55558","Créateur":"#904100","Souverain":"#9d6d00","Bouffon":"#665d00","Homme ordinaire":"#558736","Protecteur":"#006f41","Explorateur":"#008e88","Innocent":"#00698b","Sage":"#4079bf","Magicien":"#554d9d","Hors-la-loi":"#935faa","Amoureux":"#8c3865"}

@@ -1,0 +1,8 @@
+Monde 12, 10 questions : indice du n° 1 au hasard — médiane 229, p75 267, p90 300, p95 333
+Monde 12, 20 questions : indice du n° 1 au hasard — médiane 186, p75 209, p90 232, p95 246
+Monde 12, 30 questions : indice du n° 1 au hasard — médiane 168, p75 186, p90 205, p95 217
+Monde 7, 10 questions : indice du n° 1 au hasard — médiane 174, p75 200, p90 222, p95 240
+Monde 7, 20 questions : indice du n° 1 au hasard — médiane 150, p75 167, p90 184, p95 194
+Monde 7, 30 questions : indice du n° 1 au hasard — médiane 141, p75 153, p90 167, p95 176
+
+{"7":{"10":{"p50":174,"p75":200,"p90":222,"p95":240},"20":{"p50":150,"p75":167,"p90":184,"p95":194},"30":{"p50":141,"p75":153,"p90":167,"p95":176}},"12":{"10":{"p50":229,"p75":267,"p90":300,"p95":333},"20":{"p50":186,"p75":209,"p90":232,"p95":246},"30":{"p50":168,"p75":186,"p90":205,"p95":217}}}

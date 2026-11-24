@@ -1,0 +1,18 @@
+{
+  "name": "Archétypes Lab (variante)",
+  "short_name": "Variante",
+  "description": "Questionnaire d'archétypes (12 Archétypes ou 7 Princesses) : outil de réflexion personnelle.",
+  "lang": "fr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "id": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1c2846",
+  "theme_color": "#1c2846",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

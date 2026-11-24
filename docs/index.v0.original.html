@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Archétypes">
+<title>Archétypes — Déclaratif & Observation</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --card-soft: #263349;
+    --accent: #d4a373;
+    --accent-soft: rgba(212, 163, 115, 0.16);
+    --accent-2: #60a5fa;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --border: rgba(255, 255, 255, 0.1);
+    --success: #34d399;
+    --danger: #f87171;
+  }
+  body.theme-women {
+    --bg: #230f1e;
+    --card: #36182f;
+    --card-soft: #47203e;
+    --accent: #e6b88a;
+    --accent-soft: rgba(230, 184, 138, 0.18);
+    --accent-2: #f472b6;
+    --text: #fdf8fb;
+    --muted: #cbb2c4;
+    --border: rgba(255, 255, 255, 0.12);
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    transition: background 0.35s ease, color 0.35s ease;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0 16px;
+  }
+  .brand {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .brand span {
+    color: var(--accent);
+  }
+  .badge-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+  .segmented {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--card);
+    padding: 4px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .seg-btn {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    padding: 10px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .seg-btn.active {
+    background: var(--accent);
+    color: #111827;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+  label.field-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  input[type="text"] {
+    width: 100%;
+    background: var(--card-soft);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-size: 15px;
+    outline: none;
+  }
+  input[type="text"]:focus {
+    border-color: var(--accent);
+  }
+  .mode-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .mode-card {
+    background: var(--card-soft);
+    border: 1.5px solid var(--border);
+    border-radius: 13px;
+    padding: 11px;
+    text-align: left;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .mode-card.active {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .mode-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .mode-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 4px;
+  }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 28px;
+  }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: var(--card-soft);
+    border-radius: 28px;
+    transition: .3s;
+    border: 1px solid var(--border);
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: .3s;
+  }
+  input:checked + .slider { background-color: var(--accent); }
+  input:checked + .slider:before { transform: translateX(20px); }
+
+  .btn-primary {
+    width: 100%;
+    background: var(--accent);
+    color: #111827;
+    border: none;
+    border-radius: 14px;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 6px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-secondary {
+    width: 100%;
+    background: var(--card-soft);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 13px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+
+  /* Quiz view */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--card-soft);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 10%;
+    transition: width 0.3s ease;
+  }
+  .timer-pill {
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 3px 9px;
+    border-radius: 99px;
+  }
+  .timer-pill.urgent {
+    color: var(--danger);
+    background: rgba(248, 113, 113, 0.18);
+  }
+  .q-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .q-text {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.38;
+    margin-bottom: 16px;
+  }
+  .option-btn {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--card-soft);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 13px 14px;
+    margin-bottom: 10px;
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .option-btn:active {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    transform: scale(0.99);
+  }
+  .opt-letter {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .opt-label {
+    font-size: 14px;
+    line-height: 1.38;
+  }
+
+  /* Results view */
+  .hero-result {
+    text-align: center;
+    padding: 20px 16px;
+    background: linear-gradient(145deg, var(--card), var(--card-soft));
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .hero-sub {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .hero-title {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 6px 0;
+  }
+  .hero-meta {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  canvas {
+    width: 100% !important;
+    max-width: 340px;
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
+  }
+  .rank-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .rank-item:last-child { border-bottom: none; }
+  .rank-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .rank-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    background: var(--card-soft);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rank-num.top {
+    background: var(--accent);
+    color: #111827;
+  }
+  .rank-name { font-size: 14px; font-weight: 700; }
+  .rank-desc { font-size: 11px; color: var(--muted); }
+  .rank-score { font-size: 14px; font-weight: 700; color: var(--accent); }
+  .duo-banner {
+    background: var(--accent-soft);
+    border: 1px dashed var(--accent);
+    border-radius: 14px;
+    padding: 12px;
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="brand">Archétypes <span>Lab</span></div>
+    <div class="badge-pill" id="duoIndicator">Solo</div>
+  </header>
+
+  <!-- HOME VIEW -->
+  <div id="viewHome">
+    <div class="segmented">
+      <button class="seg-btn active" id="btnUniv12" onclick="setUniverse('12')">Les 12 Archétypes</button>
+      <button class="seg-btn" id="btnUniv7" onclick="setUniverse('7')">Les 7 Déesses</button>
+    </div>
+
+    <div class="card">
+      <label class="field-label" for="subjectName">Sujet évalué</label>
+      <input type="text" id="subjectName" placeholder="Ex : Moi-même, Marc, Sophie..." value="Profil Test">
+    </div>
+
+    <div class="card">
+      <label class="field-label">Mode de tirage dynamique (10 questions / 50)</label>
+      <div class="mode-grid" id="modeGrid">
+        <button class="mode-card active" data-mode="decl" onclick="selectMode('decl')">
+          <div class="mode-title">1. Déclaratif Pur</div>
+          <div class="mode-desc">10 questions tirées parmi les 25 items d'introspection.</div>
+        </button>
+        <button class="mode-card" data-mode="obs" onclick="selectMode('obs')">
+          <div class="mode-title">2. Observation Pure</div>
+          <div class="mode-desc">10 faits observables tirés parmi les 25 items externes.</div>
+        </button>
+        <button class="mode-card" data-mode="mix" onclick="selectMode('mix')">
+          <div class="mode-title">3. Mixte Équilibré</div>
+          <div class="mode-desc">5 questions déclaratives + 5 d'observation au hasard.</div>
+        </button>
+        <button class="mode-card" data-mode="dilemme" onclick="selectMode('dilemme')">
+          <div class="mode-title">4. Dilemmes & Pression</div>
+          <div class="mode-desc">Arbitrages forcés à coût réel et réflexes sous stress.</div>
+        </button>
+        <button class="mode-card" data-mode="miroir" onclick="selectMode('miroir')">
+          <div class="mode-title">5. Miroir Social</div>
+          <div class="mode-desc">Allure, posture en groupe et première impression.</div>
+        </button>
+        <button class="mode-card" data-mode="random" onclick="selectMode('random')">
+          <div class="mode-title">6. Tirage Intégral</div>
+          <div class="mode-desc">10 questions renouvelées parmi la banque complète (50).</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="toggle-row">
+        <div>
+          <div style="font-size:14px;font-weight:700;">Chronomètre réflexe (10s)</div>
+          <div style="font-size:11.5px;color:var(--muted);">Court-circuite la rationalisation</div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="timerToggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div id="duoSavedBox" class="duo-banner hidden"></div>
+
+    <button class="btn-primary" onclick="startQuiz()">Lancer la session (10 questions)</button>
+    <button id="clearDuoBtn" class="btn-secondary hidden" onclick="clearDuo()">Effacer la comparaison Duo</button>
+  </div>
+
+  <!-- QUIZ VIEW -->
+  <div id="viewQuiz" class="hidden">
+    <div class="progress-wrap">
+      <span id="qCounter">Question 1 / 10</span>
+      <span id="timerDisplay" class="timer-pill hidden">10s</span>
+      <span id="qModeBadge">Déclaratif</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="card">
+      <div class="q-tag" id="qAxis">Axe</div>
+      <div class="q-text" id="qText">Chargement...</div>
+      <div id="optionsContainer"></div>
+    </div>
+
+    <button class="btn-secondary" onclick="abortQuiz()">Abandonner la session</button>
+  </div>
+
+  <!-- RESULTS VIEW -->
+  <div id="viewResult" class="hidden">
+    <div class="hero-result">
+      <div class="hero-sub" id="resSubject">Profil</div>
+      <div class="hero-title" id="resSignature">Le Magicien — Le Sage</div>
+      <div class="hero-meta" id="resSummary">Moteur et zone d'ombre</div>
+    </div>
+
+    <div id="duoDiagnostic" class="duo-banner hidden"></div>
+
+    <div class="card">
+      <label class="field-label" style="text-align:center;">Signature Archétypale (Radar)</label>
+      <canvas id="radarCanvas" width="340" height="340"></canvas>
+    </div>
+
+    <div class="card">
+      <label class="field-label">Classement détaillé</label>
+      <div id="rankingList"></div>
+    </div>
+
+    <button class="btn-primary" onclick="prepareDuoCompare()">Comparer en Duo (Déclaratif vs Observation)</button>
+    <button class="btn-secondary" onclick="goHome()">Nouvelle session</button>
+  </div>
+</div>
+
+<script>
+const META_12 = {
+  "Magicien": { full: "Le Magicien", motor: "Comprendre les lois cachées pour transformer la réalité.", shadow: "Mise à distance analytique ou manipulation." },
+  "Sage": { full: "Le Sage", motor: "Chercher la vérité objective et modéliser les systèmes.", shadow: "Paralysie par l'analyse, détachement." },
+  "Hors-la-loi": { full: "Le Hors-la-loi", motor: "Briser les règles absurdes et renverser le statu quo.", shadow: "Rupture gratuite, marginalisation." },
+  "Explorateur": { full: "L'Explorateur", motor: "Repousser les frontières et préserver son autonomie.", shadow: "Instabilité chronique, fuite de l'engagement." },
+  "Créateur": { full: "Le Créateur", motor: "Bâtir une œuvre durable et singulière.", shadow: "Perfectionnisme bloquant." },
+  "Souverain": { full: "Le Souverain", motor: "Structurer, gouverner et garantir la stabilité.", shadow: "Autoritarisme, difficulté à déléguer." },
+  "Héros": { full: "Le Héros", motor: "Relever les défis et triompher par l'effort.", shadow: "Besoin constant d'un combat." },
+  "Protecteur": { full: "Le Protecteur", motor: "Veiller sur les autres et préserver le groupe.", shadow: "Oubli de soi, surprotection." },
+  "Amoureux": { full: "L'Amoureux", motor: "Créer une connexion profonde et sensorielle.", shadow: "Dépendance affective." },
+  "Bouffon": { full: "Le Bouffon", motor: "Dédramatiser le réel par l'humour et le paradoxe.", shadow: "Fuite des responsabilités." },
+  "Homme ordinaire": { full: "L'Homme ordinaire", motor: "Cultiver l'authenticité et le bon sens collectif.", shadow: "Conformisme, effacement." },
+  "Innocent": { full: "L'Innocent", motor: "Préserver la simplicité, la confiance et l'harmonie.", shadow: "Naïveté face aux rapports de force." }
+};
+
+const META_7 = {
+  "Athéna": { full: "Athéna", motor: "Clarté intellectuelle, maîtrise stratégique et pragmatisme.", shadow: "Froideur émotionnelle, excès de rationalisation." },
+  "Artémis": { full: "Artémis", motor: "Indépendance farouche, action, protection et liberté.", shadow: "Intransigeance, refus de la vulnérabilité." },
+  "Hestia": { full: "Hestia", motor: "Sérénité, centrage intérieur, sagesse et ordre silencieux.", shadow: "Retrait excessif, isolement." },
+  "Héra": { full: "Héra", motor: "Loyauté absolue, engagement durable et partenariat.", shadow: "Rigidité face aux écarts de loyauté." },
+  "Déméter": { full: "Déméter", motor: "Bienveillance, soutien inconditionnel et transmission.", shadow: "Surprotection, oubli de soi." },
+  "Perséphone": { full: "Perséphone", motor: "Réceptivité, empathie profonde, souplesse et intuition.", shadow: "Indécision, frontières floues." },
+  "Aphrodite": { full: "Aphrodite", motor: "Magnétisme, désir, esthétique, passion et transformation.", shadow: "Quête d'intensité permanente." }
+};
+
+const BANK_12 = [
+  {id:1,m:"Déclaratif",t:"social",a:"Résolution de problème",q:"Face à un problème complexe que personne n'a encore résolu, quel est votre premier réflexe ?",o:[["Remonter aux principes fondamentaux et modéliser la logique cachée.","Sage","Magicien"],["Concevoir une architecture ou un outil inédit pour contourner l'obstacle.","Créateur","Magicien"],["Prendre le leadership, trancher et organiser les ressources.","Souverain","Héros"],["Sortir du cadre habituel et tester une approche non conventionnelle.","Hors-la-loi","Explorateur"]]},
+  {id:2,m:"Déclaratif",t:"core",a:"Satisfaction intérieure",q:"Qu'est-ce qui vous procure la plus grande satisfaction intérieure ?",o:[["Avoir compris en profondeur comment quelque chose fonctionne réellement.","Sage","Magicien"],["Avoir bâti quelque chose de durable qui porte votre signature.","Créateur","Souverain"],["Avoir protégé, aidé ou fait grandir les personnes autour de vous.","Protecteur","Amoureux"],["Avoir repoussé vos limites et découvert un territoire inconnu.","Explorateur","Héros"]]},
+  {id:3,m:"Déclaratif",t:"core",a:"Peur fondamentale",q:"Quelle est votre pire crainte sur le plan intellectuel ou personnel ?",o:[["Être dupé par une illusion, l'ignorance ou un raisonnement superficiel.","Sage","Innocent"],["L'impuissance, le chaos ou la perte de contrôle sur ce que vous dirigez.","Souverain","Protecteur"],["L'enfermement dans une routine rigide qui bride votre liberté.","Explorateur","Bouffon"],["La médiocrité ou le fait de ne rien laisser de significatif derrière vous.","Hors-la-loi","Créateur"]]},
+  {id:4,m:"Déclaratif",t:"dilemme",a:"Rapport aux règles",q:"Face à une règle établie que vous jugez absurde ou inefficace, comment réagissez-vous ?",o:[["Vous démontrez rationnellement son incohérence pour la faire évoluer.","Sage","Souverain"],["Vous la contournez ou la brisez ouvertement si elle bloque l'essentiel.","Hors-la-loi","Magicien"],["Vous vous en affranchissez discrètement pour tracer votre propre voie.","Explorateur","Créateur"],["Vous la respectez en apparence tant qu'elle préserve la cohésion du groupe.","Homme ordinaire","Protecteur"]]},
+  {id:5,m:"Déclaratif",t:"dilemme",a:"Posture en crise",q:"Dans un groupe en crise ou en plein doute, quel rôle prends-tu naturellement ?",o:[["Celui qui prend du recul, analyse à froid et éclaire la décision.","Sage","Magicien"],["Celui qui monte au front, assume la responsabilité et impose un cap clair.","Héros","Souverain"],["Celui qui rassure, soutient les plus exposés et veille à l'équilibre humain.","Protecteur","Homme ordinaire"],["Celui qui dédramatise par l'humour ou change radicalement d'angle de vue.","Bouffon","Explorateur"]]},
+  {id:6,m:"Déclaratif",t:"core",a:"Définition du succès",q:"Comment définis-tu le succès d'une vie ou d'une carrière ?",o:[["Par la maîtrise d'un domaine et la transmission d'un savoir juste.","Sage","Innocent"],["Par la réalisation d'une œuvre, d'un projet ou d'une vision singulière.","Créateur","Magicien"],["Par l'impact concret et la puissance d'action obtenus.","Souverain","Héros"],["Par l'intensité des expériences vécues et la liberté conservée.","Explorateur","Amoureux"]]},
+  {id:7,m:"Déclaratif",t:"social",a:"Intolérance sociale",q:"Qu'est-ce qui t'agace le plus chez les autres ?",o:[["La paresse intellectuelle, le dogmatisme et les affirmations sans preuve.","Sage","Magicien"],["L'incompétence associée au manque de sens des responsabilités.","Souverain","Héros"],["Le conformisme aveugle et la peur de sortir des sentiers battus.","Hors-la-loi","Explorateur"],["La froideur, l'égoïsme ou le manque d'empathie.","Protecteur","Amoureux"]]},
+  {id:8,m:"Déclaratif",t:"dilemme",a:"Décision dans l'incertain",q:"Lorsque tu dois décider avec une information incomplète, sur quoi t'appuies-tu ?",o:[["Sur la déduction logique et la recherche maximale de données.","Sage","Souverain"],["Sur ton intuition des dynamiques invisibles et la transformation en cours de route.","Magicien","Créateur"],["Sur ton sens du devoir, ton courage et ta capacité à encaisser le choc.","Héros","Protecteur"],["Sur ton expérience personnelle et ton instinct de liberté.","Explorateur","Hors-la-loi"]]},
+  {id:9,m:"Déclaratif",t:"core",a:"Devise personnelle",q:"Si tu devais choisir une devise, laquelle te ressemblerait le plus ?",o:[["« La vérité libère. »","Sage","Innocent"],["« Si cela peut être imaginé, cela peut être bâti. »","Créateur","Magicien"],["« Le pouvoir oblige. »","Souverain","Protecteur"],["« Ne me tracez pas de frontières. »","Explorateur","Hors-la-loi"]]},
+  {id:10,m:"Déclaratif",t:"core",a:"Zone d'ombre",q:"Quelle est ta principale zone d'ombre (le défaut lié à ta qualité principale) ?",o:[["Le détachement excessif : sur-analyser au lieu de s'impliquer émotionnellement.","Sage","Magicien"],["Le perfectionnisme : ne jamais être satisfait de ce que tu produis.","Créateur","Innocent"],["L'autoritarisme ou la difficulté à déléguer le contrôle.","Souverain","Héros"],["L'impatience face aux contraintes et la difficulté à te fixer.","Explorateur","Hors-la-loi"]]},
+  {id:11,m:"Déclaratif",t:"core",a:"Rapport au pouvoir",q:"Que représente le pouvoir pour vous ?",o:[["Un levier pour mettre de l'ordre, protéger et garantir la stabilité.","Souverain","Protecteur"],["Une capacité à transformer la réalité en profondeur sans contrainte apparente.","Magicien","Créateur"],["Une prison dorée dont il vaut mieux se méfier pour rester libre.","Explorateur","Homme ordinaire"],["Un outil de combat pour renverser les structures injustes.","Hors-la-loi","Héros"]]},
+  {id:12,m:"Déclaratif",t:"core",a:"Source d'énergie",q:"Dans quel environnement vous sentez-vous le plus vivant ?",o:[["Dans un atelier, un laboratoire ou face à une feuille blanche pour concevoir.","Créateur","Sage"],["Au cœur de l'action intense, face à un défi exigeant.","Héros","Souverain"],["Entouré de proches dans une atmosphère chaleureuse et sans masque.","Amoureux","Homme ordinaire"],["En mouvement vers un lieu, une idée ou un projet encore inexploré.","Explorateur","Bouffon"]]},
+  {id:13,m:"Déclaratif",t:"dilemme",a:"Rapport à l'échec",q:"Comment digérez-vous un échec majeur ?",o:[["Vous le disséquez méthodiquement pour en extraire la loi générale.","Sage","Magicien"],["Vous rebondissez immédiatement en cherchant une nouvelle bataille à gagner.","Héros","Souverain"],["Vous le tournez en dérision pour alléger la pression et repartir léger.","Bouffon","Innocent"],["Vous vous isolez pour tout reconstruire sur de nouvelles bases.","Créateur","Hors-la-loi"]]},
+  {id:14,m:"Déclaratif",t:"social",a:"Style de leadership",q:"Si vous devez diriger une équipe, quelle est votre méthode ?",o:[["Fixer une vision claire, attribuer les rôles et exiger l'excellence.","Souverain","Héros"],["Inspirer un changement de paradigme et libérer le potentiel de chacun.","Magicien","Sage"],["Créer un climat d'égalité, de confiance et d'entraide mutuelle.","Homme ordinaire","Protecteur"],["Supprimer les procédures inutiles et laisser chacun improviser.","Hors-la-loi","Bouffon"]]},
+  {id:15,m:"Déclaratif",t:"core",a:"Rapport au temps",q:"Quelle est votre relation spontanée au temps ?",o:[["Vous pensez à long terme : architectures durables, héritage et cycles.","Souverain","Sage"],["Vous vivez l'instant présent avec intensité, passion et sensorialité.","Amoureux","Bouffon"],["Vous cherchez à accélérer les mutations et anticiper les ruptures.","Magicien","Hors-la-loi"],["Vous refusez les agendas surchargés pour préserver votre disponibilité.","Explorateur","Innocent"]]},
+  {id:16,m:"Déclaratif",t:"core",a:"Motivation profonde",q:"Qu'est-ce qui vous pousse à vous lever le matin ?",o:[["L'envie de comprendre une énigme ou de résoudre un problème complexe.","Sage","Magicien"],["Le désir de créer quelque chose qui n'existait pas la veille.","Créateur","Souverain"],["Le sentiment d'être utile et de veiller sur ceux qui comptent.","Protecteur","Amoureux"],["La perspective d'une aventure, d'une découverte ou d'une liberté nouvelle.","Explorateur","Héros"]]},
+  {id:17,m:"Déclaratif",t:"social",a:"Rapport à l'autorité",q:"Face à une figure d'autorité reconnue, quelle est votre attitude ?",o:[["Vous la respectez si sa compétence et sa légitimité sont démontrées.","Sage","Souverain"],["Vous la testez subtilement pour voir jusqu'où va sa maîtrise réelle.","Hors-la-loi","Magicien"],["Vous lui apportez votre loyauté tant qu'elle sert le bien commun.","Homme ordinaire","Protecteur"],["Vous gardez instinctivement vos distances pour ne dépendre de personne.","Explorateur","Créateur"]]},
+  {id:18,m:"Déclaratif",t:"social",a:"Expression personnelle",q:"Comment préférez-vous convaincre quelqu'un ?",o:[["Par une démonstration implacable, structurée et documentée.","Sage","Souverain"],["Par une métaphore puissante qui change sa façon de voir le problème.","Magicien","Créateur"],["Par l'enthousiasme, la passion et la connexion émotionnelle.","Amoureux","Innocent"],["Par l'humour, le paradoxe ou une provocation intelligente.","Bouffon","Hors-la-loi"]]},
+  {id:19,m:"Déclaratif",t:"core",a:"Valeur cardinale",q:"Si vous ne deviez garder qu'une seule valeur, ce serait :",o:[["La lucidité.","Sage","Magicien"],["La liberté.","Explorateur","Hors-la-loi"],["La loyauté.","Protecteur","Homme ordinaire"],["La maîtrise.","Souverain","Héros"]]},
+  {id:20,m:"Déclaratif",t:"core",a:"Rapport aux traditions",q:"Que vous inspirent les traditions et les usages anciens ?",o:[["Des repères rassurants qui soudent une communauté.","Homme ordinaire","Innocent"],["Des matériaux bruts à réinterpréter pour inventer du neuf.","Créateur","Magicien"],["Des carcans dépassés qu'il faut savoir secouer.","Hors-la-loi","Explorateur"],["Des systèmes dont il faut comprendre l'origine avant de juger.","Sage","Souverain"]]},
+  {id:21,m:"Déclaratif",t:"dilemme",a:"Gestion des conflits",q:"Lorsqu'un conflit ouvert éclate, comment réagissez-vous ?",o:[["Vous affrontez l'obstacle directement pour trancher et clore le sujet.","Héros","Souverain"],["Vous recadrez le débat pour transformer l'opposition en solution.","Magicien","Sage"],["Vous cherchez l'apaisement et la réconciliation des parties.","Protecteur","Amoureux"],["Vous désamorcez la tension par une pirouette ou prenez le large.","Bouffon","Explorateur"]]},
+  {id:22,m:"Déclaratif",t:"core",a:"Esthétique et beauté",q:"À quoi êtes-vous le plus sensible dans une œuvre ou un projet ?",o:[["À l'élégance structurelle et à la cohérence interne.","Sage","Créateur"],["À l'originalité radicale et à l'audace de rupture.","Hors-la-loi","Magicien"],["À l'émotion pure, la sensualité et l'harmonie.","Amoureux","Innocent"],["À la simplicité authentique et accessible à tous.","Homme ordinaire","Protecteur"]]},
+  {id:23,m:"Déclaratif",t:"core",a:"Confiance en soi",q:"D'où tirez-vous votre sentiment de légitimité ?",o:[["De votre expertise approfondie et de votre capacité d'analyse.","Sage","Souverain"],["De vos réalisations concrètes et des épreuves surmontées.","Héros","Créateur"],["De votre capacité à sentir ce que les autres ne voient pas encore.","Magicien","Amoureux"],["De votre indépendance d'esprit et de votre refus de plier.","Hors-la-loi","Explorateur"]]},
+  {id:24,m:"Déclaratif",t:"core",a:"Rapport à l'avenir",q:"Face à l'avenir, quelle est votre posture dominante ?",o:[["Un optimisme lucide : tout système peut être amélioré si on le comprend.","Magicien","Créateur"],["Une confiance sereine dans la bonté humaine et les solutions simples.","Innocent","Homme ordinaire"],["Une vigilance stratégique : il faut bâtir des remparts solides.","Souverain","Protecteur"],["Une excitation face à l'inconnu et aux opportunités de rupture.","Explorateur","Hors-la-loi"]]},
+  {id:25,m:"Déclaratif",t:"core",a:"Héritage souhaité",q:"Comment aimeriez-vous qu'on se souvienne de vous ?",o:[["Comme quelqu'un qui a ouvert des voies nouvelles et fait bouger les lignes.","Magicien","Hors-la-loi"],["Comme quelqu'un qui a éclairé les esprits et transmis la connaissance.","Sage","Innocent"],["Comme quelqu'un sur qui l'on pouvait toujours compter.","Protecteur","Amoureux"],["Comme quelqu'un qui a bâti une œuvre ou une institution solide.","Souverain","Créateur"]]},
+
+  {id:26,m:"Observation",t:"dilemme",a:"Dilemme à coût réel",q:"ARBITRAGE FORCÉ : Pour sauver un projet vital, que sacrifiez-vous en premier ?",o:[["Le consensus et l'harmonie avec l'équipe.","Souverain","Hors-la-loi"],["Le respect strict de la procédure et du règlement.","Hors-la-loi","Magicien"],["Le confort personnel et le temps libre.","Héros","Protecteur"],["La sophistication technique pour livrer simple et vite.","Homme ordinaire","Sage"]]},
+  {id:27,m:"Observation",t:"miroir",a:"Miroir social (5 premières min)",q:"OBSERVATION : Quand une règle bloque un groupe, que fait-il dans les 5 premières minutes ?",o:[["Il cherche immédiatement une faille ou un contournement technique.","Hors-la-loi","Magicien"],["Il prend la parole pour réorganiser les rôles et trancher.","Souverain","Héros"],["Il interroge le bien-fondé logique de la règle.","Sage","Créateur"],["Il détend l'atmosphère par une blague ou calme les tensions.","Bouffon","Protecteur"]]},
+  {id:28,m:"Observation",t:"miroir",a:"Comportement en soirée",q:"OBSERVATION : Dans un dîner où il ne connaît personne, vers quoi dérive sa conversation ?",o:[["Vers des idées profondes, des modèles du monde ou des débats de fond.","Sage","Magicien"],["Vers des anecdotes vécues, des voyages ou des projets insolites.","Explorateur","Hors-la-loi"],["Vers l'écoute attentive de son interlocuteur et de son histoire personnelle.","Amoureux","Protecteur"],["Vers des traits d'esprit qui font rire la table et brisent la glace.","Bouffon","Homme ordinaire"]]},
+  {id:29,m:"Observation",t:"miroir",a:"Rapport à un outil neuf",q:"OBSERVATION : Face à un logiciel ou appareil complexe neuf, comment procède-t-il ?",o:[["Il lit l'architecture ou la documentation avant de toucher.","Sage","Innocent"],["Il clique partout, teste les limites et le pousse hors de son usage prévu.","Hors-la-loi","Explorateur"],["Il le configure méthodiquement pour optimiser son flux de travail.","Magicien","Créateur"],["Il demande à quelqu'un de lui montrer l'essentiel pour démarrer.","Homme ordinaire","Amoureux"]]},
+  {id:30,m:"Observation",t:"dilemme",a:"Réflexe sous pression",q:"RÉFLEXE SOUS PRESSION : Un partenaire clé vous lâche la veille d'une échéance :",o:[["Vous pivotez instantanément et réinventez le dispositif avec les moyens du bord.","Magicien","Créateur"],["Vous montez au front seul pour assurer la livraison coûte que coûte.","Héros","Protecteur"],["Vous coupez les ponts froidement et verrouillez vos arrières.","Souverain","Hors-la-loi"],["Vous analysez les causes exactes de la défaillance avant d'agir.","Sage","Innocent"]]},
+  {id:31,m:"Observation",t:"miroir",a:"Observation de l'espace",q:"INDICE MATÉRIEL : À quoi ressemble son bureau ou son espace personnel ?",o:[["Structuré comme un poste de commandement, chaque chose à sa place.","Souverain","Sage"],["Un laboratoire foisonnant de carnets, schémas, livres et prototypes.","Créateur","Magicien"],["Minimaliste et mobile : tout tient dans un sac prêt à partir.","Explorateur","Hors-la-loi"],["Chaleureux, personnalisé avec des objets liés aux proches et aux souvenirs.","Amoureux","Protecteur"]]},
+  {id:32,m:"Observation",t:"miroir",a:"Réaction à l'injustice",q:"OBSERVATION : Témoin d'une injustice flagrante en public, quel est son geste réflexe ?",o:[["Il intervient physiquement ou verbalement sans calculer le risque.","Héros","Hors-la-loi"],["Il retourne la situation par une intervention stratégique ou ironique.","Magicien","Bouffon"],["Il va immédiatement soutenir et protéger la personne visée.","Protecteur","Innocent"],["Il observe la scène pour comprendre le rapport de force réel.","Sage","Souverain"]]},
+  {id:33,m:"Observation",t:"dilemme",a:"Dilemme à coût réel",q:"ARBITRAGE FORCÉ : Vous devez renoncer à l'un de ces 4 privilèges pour les 5 prochaines années :",o:[["La reconnaissance publique de vos pairs.","Hors-la-loi","Sage"],["La sécurité matérielle et la prévisibilité.","Explorateur","Héros"],["La possibilité de décider seul de votre emploi du temps.","Protecteur","Homme ordinaire"],["La possibilité de créer ou d'expérimenter de nouvelles idées.","Souverain","Innocent"]]},
+  {id:34,m:"Observation",t:"miroir",a:"Prise de parole en réunion",q:"OBSERVATION : À quel moment intervient-il dans une réunion stratégique ?",o:[["À la fin, pour synthétiser et proposer le cadre qui met tout le monde d'accord.","Sage","Magicien"],["Dès le début, pour cadrer l'ordre du jour et fixer les objectifs.","Souverain","Héros"],["Au moment où tout le monde s'enlise, pour casser le cadre avec une idée radicale.","Hors-la-loi","Bouffon"],["Uniquement quand on lui demande son avis ou pour défendre un collègue.","Homme ordinaire","Protecteur"]]},
+  {id:35,m:"Observation",t:"miroir",a:"Décodage de style",q:"OBSERVATION INDIRECTE : Comment aborde-t-il un jeu ou un test comme celui-ci ?",o:[["Il questionne la méthodologie et cherche à comprendre l'algorithme derrière.","Sage","Magicien"],["Il répond vite à l'instinct en cherchant les options les plus libres.","Explorateur","Hors-la-loi"],["Il nuance chaque réponse car aucune case ne lui semble assez précise.","Créateur","Souverain"],["Il joue le jeu avec enthousiasme et partage ses résultats autour de lui.","Homme ordinaire","Bouffon"]]},
+  {id:36,m:"Observation",t:"obs_gen",a:"Imprévu de voyage",q:"OBSERVATION : Un vol est annulé à l'étranger sans solution immédiate. Que fait-il ?",o:[["Il improvise un itinéraire bis et transforme le contretemps en aventure.","Explorateur","Bouffon"],["Il négocie fermement au comptoir jusqu'à obtenir une solution ou un surclassement.","Souverain","Héros"],["Il organise la logistique pour que tout son groupe soit hébergé et rassuré.","Protecteur","Homme ordinaire"],["Il sort son ordinateur ou un livre et met à profit l'attente au calme.","Sage","Créateur"]]},
+  {id:37,m:"Observation",t:"obs_gen",a:"Rapport aux ressources",q:"OBSERVATION : Comment utilise-t-il un surplus financier inattendu ?",o:[["Il finance un projet ambitieux, une œuvre ou un outil de transformation.","Créateur","Magicien"],["Il s'offre une expérience rare, un voyage ou du temps libre.","Explorateur","Amoureux"],["Il sécurise sa base et aide discrètement un proche dans le besoin.","Protecteur","Innocent"],["Il investit pour accroître son levier d'action et son indépendance.","Souverain","Hors-la-loi"]]},
+  {id:38,m:"Observation",t:"miroir",a:"Attitude face à la critique",q:"OBSERVATION : Quand on critique publiquement son travail, que voit-on sur son attitude ?",o:[["Une curiosité froide : il demande des arguments précis pour vérifier si c'est fondé.","Sage","Magicien"],["Un agacement visible si la critique vient de quelqu'un qu'il juge illégitime.","Souverain","Héros"],["Une remise en question immédiate et une envie de retravailler sa copie.","Créateur","Innocent"],["Un sourire détaché : il n'accorde aucun crédit au jugement extérieur.","Hors-la-loi","Explorateur"]]},
+  {id:39,m:"Observation",t:"dilemme",a:"Dilemme à coût réel",q:"ARBITRAGE FORCÉ : Face à un mensonge collectif qui arrange tout le monde :",o:[["Vous révélez la vérité publiquement, quitte à provoquer une crise.","Hors-la-loi","Héros"],["Vous utilisez cette information en coulisses pour réorienter le système.","Magicien","Souverain"],["Vous vous retirez discrètement du jeu sans faire de vague.","Explorateur","Sage"],["Vous gardez le silence pour protéger les personnes vulnérables impliquées.","Protecteur","Homme ordinaire"]]},
+  {id:40,m:"Observation",t:"obs_gen",a:"Choix de contenu",q:"INDICE COMPORTEMENTAL : Quels contenus consomme-t-il spontanément tard le soir ?",o:[["Des traités fondamentaux, des analyses systémiques ou des essais pointus.","Sage","Magicien"],["Des biographies de bâtisseurs, de stratèges ou de figures dissidentes.","Souverain","Hors-la-loi"],["Des récits d'exploration, de science-fiction ou de création artistique.","Explorateur","Créateur"],["Des contenus humains, musicaux, humoristiques ou liés à ses passions.","Amoureux","Bouffon"]]},
+  {id:41,m:"Observation",t:"dilemme",a:"Réaction face à la lenteur",q:"OBSERVATION : Coincé dans un processus administratif lent et absurde :",o:[["Il court-circuite la chaîne hiérarchique pour parler directement au décideur.","Souverain","Héros"],["Il trouve un angle juridique ou technique inédit qui débloque le dossier.","Magicien","Sage"],["Il prend son mal en patience et reste courtois avec l'agent en face.","Innocent","Homme ordinaire"],["Il abandonne la démarche et cherche une alternative hors système.","Hors-la-loi","Explorateur"]]},
+  {id:42,m:"Observation",t:"miroir",a:"Première impression",q:"MIROIR SOCIAL : Comment les inconnus décrivent-ils sa première impression ?",o:[["Calme, observateur, difficile à cerner au premier abord.","Sage","Explorateur"],["Intense, magnétique, donnant l'impression d'avoir une longueur d'avance.","Magicien","Hors-la-loi"],["Solide, charismatique, inspirant immédiatement le respect ou l'autorité.","Souverain","Héros"],["Accessible, chaleureux, mettant tout de suite à l'aise.","Homme ordinaire","Amoureux"]]},
+  {id:43,m:"Observation",t:"obs_gen",a:"Erreur d'un subordonné",q:"OBSERVATION : Un membre de son équipe commet une erreur coûteuse :",o:[["Il protège le membre vis-à-vis de l'extérieur et débriefe en privé.","Protecteur","Souverain"],["Il analyse comment le système a permis l'erreur pour le rendre infaillible.","Magicien","Sage"],["Il recadre fermement et exige une réparation rapide.","Héros","Souverain"],["Il dédramatise l'incident et transforme l'erreur en piste créative.","Bouffon","Créateur"]]},
+  {id:44,m:"Observation",t:"dilemme",a:"Dilemme à coût réel",q:"ARBITRAGE FORCÉ : On vous propose un poste très prestigieux mais très encadré :",o:[["Vous refusez : aucune médaille ne vaut la perte de votre autonomie.","Explorateur","Hors-la-loi"],["Vous acceptez uniquement si vous avez carte blanche pour réformer les règles.","Magicien","Créateur"],["Vous acceptez pour exercer pleinement votre capacité de direction.","Souverain","Héros"],["Vous acceptez si cela vous permet de sécuriser et d'aider votre entourage.","Protecteur","Homme ordinaire"]]},
+  {id:45,m:"Observation",t:"miroir",a:"Rapport à la foule",q:"OBSERVATION : Dans un grand rassemblement ou une conférence :",o:[["Il reste en périphérie, observe les dynamiques et sélectionne 2 échanges clés.","Sage","Magicien"],["Il se retrouve naturellement au centre d'un cercle qui l'écoute.","Souverain","Héros"],["Il papillonne d'un groupe à l'autre avec aisance et humour.","Bouffon","Amoureux"],["Il s'éclipse rapidement dès que les échanges deviennent superficiels.","Hors-la-loi","Explorateur"]]},
+  {id:46,m:"Observation",t:"dilemme",a:"Face à un dogme établi",q:"OBSERVATION : Quand tout son milieu professionnel adhère à une mode méthodologique :",o:[["Il démonte ses hypothèses cachées et expose une alternative rigoureuse.","Sage","Hors-la-loi"],["Il l'ignore superbement et continue avec ses propres outils éprouvés.","Souverain","Créateur"],["Il la détourne pour en tirer un avantage que les autres n'ont pas vu.","Magicien","Explorateur"],["Il l'adopte pour rester synchronisé avec son écosystème.","Homme ordinaire","Innocent"]]},
+  {id:47,m:"Observation",t:"dilemme",a:"Réflexe sous pression",q:"RÉFLEXE SOUS PRESSION : Votre projet réussit mais un autre en récolte le mérite :",o:[["Indifférent : seul compte le fait que le système fonctionne.","Magicien","Innocent"],["Vous rétablissez froidement les faits avec preuves à l'appui.","Sage","Héros"],["Vous passez déjà au projet suivant, bien plus ambitieux.","Créateur","Explorateur"],["Vous prenez note de la déloyauté et coupez définitivement l'accès.","Souverain","Hors-la-loi"]]},
+  {id:48,m:"Observation",t:"obs_gen",a:"Style de transmission",q:"OBSERVATION : Quand il explique un sujet complexe à un novice :",o:[["Il construit une analogie limpide qui provoque un déclic immédiat.","Magicien","Créateur"],["Il repart des axiomes de base avec une rigueur pédagogique structurée.","Sage","Souverain"],["Il lui donne un cas pratique et le pousse à essayer par lui-même.","Héros","Explorateur"],["Il le rassure d'abord en lui montrant que c'est accessible à tous.","Homme ordinaire","Protecteur"]]},
+  {id:49,m:"Observation",t:"dilemme",a:"Indice de stress",q:"OBSERVATION : À quel signe précis voit-on qu'il est sous forte pression ?",o:[["Il devient ultra-silencieux, froid et hyper-concentré.","Sage","Magicien"],["Il devient impatient, cassant envers la lenteur ou l'incompétence.","Souverain","Héros"],["Il s'isole complètement et coupe les communications non essentielles.","Explorateur","Créateur"],["Il multiplie les traits d'humour noir ou l'ironie mordante.","Bouffon","Hors-la-loi"]]},
+  {id:50,m:"Observation",t:"dilemme",a:"Choix final d'observation",q:"TEST ULTIMATUM : Si vous ne pouviez garder qu'un seul super-pouvoir social :",o:[["Voir instantanément les intentions et les failles cachées de tout système.","Magicien","Sage"],["Avoir le courage et la force d'imposer le juste face à n'importe qui.","Héros","Souverain"],["Inspirer une confiance et une affection immédiates chez autrui.","Amoureux","Protecteur"],["Pouvoir disparaître et tout recommencer de zéro n'importe où.","Explorateur","Hors-la-loi"]]}
+];
+
+const BANK_7 = [
+  {id:1,m:"Déclaratif",t:"dilemme",a:"Résolution de crise",q:"Face à une crise imprévue qui bloque tout le monde, quel est votre premier réflexe ?",o:[["Prendre du recul, analyser froidement les faits et bâtir un plan logique.","Athéna","Hestia"],["Foncer sur le terrain pour débloquer la situation par vos propres moyens.","Artémis","Athéna"],["Rassurer les personnes impactées et veiller à ce que personne ne soit isolé.","Déméter","Héra"],["Sentir l'atmosphère cachée et improviser une approche créative inattendue.","Perséphone","Aphrodite"]]},
+  {id:2,m:"Déclaratif",t:"core",a:"Source d'épanouissement",q:"Qu'est-ce qui vous procure le sentiment le plus profond d'être à votre juste place ?",o:[["La liberté totale de poursuivre vos propres objectifs sans rendre de comptes.","Artémis","Hestia"],["La maîtrise intellectuelle et la réussite d'une stratégie complexe.","Athéna","Héra"],["La construction d'une union ou d'un projet commun solide et durable.","Héra","Déméter"],["La création d'une œuvre, d'une émotion ou d'une transformation intense.","Aphrodite","Perséphone"]]},
+  {id:3,m:"Déclaratif",t:"core",a:"Espace personnel",q:"Quel rôle joue la solitude ou le calme intérieur dans votre équilibre ?",o:[["C'est un sanctuaire indispensable où vous retrouvez votre centre et votre lucidité.","Hestia","Athéna"],["C'est un espace de préparation avant de repartir conquérir de nouveaux défis.","Artémis","Athéna"],["Vous préférez nettement le partage, la proximité et la vie relationnelle.","Héra","Déméter"],["Vous en avez besoin pour digérer les émotions captées autour de vous.","Perséphone","Aphrodite"]]},
+  {id:4,m:"Déclaratif",t:"core",a:"Rapport à l'engagement",q:"Comment envisagez-vous l'engagement dans le couple ou dans une alliance majeure ?",o:[["Comme un pilier sacré de loyauté mutuelle et de construction à deux.","Héra","Déméter"],["À condition absolue que chacun conserve son indépendance et son territoire.","Artémis","Athéna"],["Comme une aventure passionnée portée par le désir et l'intensité du présent.","Aphrodite","Héra"],["Avec souplesse, en laissant la relation évoluer organiquement sans cadre rigide.","Perséphone","Hestia"]]},
+  {id:5,m:"Déclaratif",t:"core",a:"Peur fondamentale",q:"Quelle situation vous est la plus insupportable au quotidien ?",o:[["Perdre votre autonomie et dépendre du bon vouloir de quelqu'un.","Artémis","Hestia"],["Subir l'irrationalité, le chaos émotionnel ou l'incompétence.","Athéna","Héra"],["Voir les personnes que vous aimez souffrir ou manquer de soutien.","Déméter","Héra"],["Vivre une existence terne, prévisible et dénuée de beauté ou de passion.","Aphrodite","Perséphone"]]},
+  {id:6,m:"Déclaratif",t:"social",a:"Rapport au pouvoir",q:"Quelle forme d'influence exercez-vous le plus naturellement ?",o:[["L'autorité stratégique : convaincre par la clarté de votre vision et vos arguments.","Athéna","Héra"],["Le magnétisme : inspirer, séduire et transformer l'énergie d'une pièce.","Aphrodite","Perséphone"],["La force tranquille : stabiliser le groupe par votre présence calme et centrée.","Hestia","Déméter"],["L'exemplarité combative : ouvrir la voie et entraîner les autres par l'audace.","Artémis","Athéna"]]},
+  {id:7,m:"Déclaratif",t:"dilemme",a:"Réaction à la trahison",q:"Face à une déloyauté flagrante, quelle est votre réaction profonde ?",o:[["Une colère froide et définitive : vous coupez le lien et tournez la page.","Artémis","Athéna"],["Une blessure profonde de votre sens de la justice et de la parole donnée.","Héra","Déméter"],["Vous analysez froidement le mécanisme pour ne plus jamais vous exposer.","Athéna","Hestia"],["Vous cherchez d'abord à comprendre les failles psychologiques de l'autre.","Perséphone","Aphrodite"]]},
+  {id:8,m:"Déclaratif",t:"dilemme",a:"Style de décision",q:"Lorsque vous devez trancher une décision importante, qu'est-ce qui pèse le plus ?",o:[["L'efficacité pragmatique et les conséquences mesurables à long terme.","Athéna","Héra"],["Votre intuition fine des non-dits et des courants souterrains.","Perséphone","Hestia"],["L'impact humain sur votre entourage proche et la préservation du lien.","Déméter","Héra"],["L'élan vital, l'enthousiasme et ce qui fait vibrer votre désir.","Aphrodite","Artémis"]]},
+  {id:9,m:"Déclaratif",t:"core",a:"Rapport aux règles",q:"Comment vous situez-vous face aux conventions sociales ?",o:[["Vous les respectez lorsqu'elles garantissent la dignité, l'ordre et le statut.","Héra","Hestia"],["Vous les ignorez tranquillement si elles entravent votre liberté d'action.","Artémis","Perséphone"],["Vous les utilisez stratégiquement comme un échiquier pour atteindre vos buts.","Athéna","Héra"],["Vous les dépassez par la créativité, l'esthétique ou l'anticonformisme.","Aphrodite","Artémis"]]},
+  {id:10,m:"Déclaratif",t:"core",a:"Zone d'ombre",q:"Quel défaut vos proches pourraient-ils vous reprocher sous stress ?",o:[["Une froideur analytique ou un manque d'indulgence envers la fragilité.","Athéna","Hestia"],["Une tendance à vouloir tout porter, nourrir ou contrôler pour les autres.","Déméter","Héra"],["Une difficulté à vous fixer durablement ou à poser des limites claires.","Perséphone","Aphrodite"],["Une intransigeance farouche dès que vous vous sentez enfermée.","Artémis","Athéna"]]},
+  {id:11,m:"Déclaratif",t:"social",a:"Sororité et liens",q:"Quelle place occupe l'amitié féminine ou la sororité dans votre vie ?",o:[["Fondamentale : vous défendez et soutenez activement les femmes autour de vous.","Artémis","Déméter"],["Vous privilégiez quelques liens choisis, profonds et sans superficialité.","Hestia","Perséphone"],["Vous vous entendez souvent mieux dans des environnements mixtes ou stratégiques.","Athéna","Héra"],["Vous aimez les échanges complices, esthétiques, émotionnels et inspirants.","Aphrodite","Perséphone"]]},
+  {id:12,m:"Déclaratif",t:"miroir",a:"Rapport à l'esthétique",q:"Quelle est votre relation à la beauté, au corps et aux sens ?",o:[["Une source centrale d'énergie, de création et de joie de vivre.","Aphrodite","Perséphone"],["Un outil de souveraineté, de prestance et de représentation soignée.","Héra","Athéna"],["Un instrument de mouvement, de sport, d'endurance et de liberté.","Artémis","Aphrodite"],["Quelque chose de sobre, harmonieux et sans ostentation.","Hestia","Déméter"]]},
+  {id:13,m:"Déclaratif",t:"dilemme",a:"Gestion des conflits",q:"Dans une discussion tendue, quelle posture adoptez-vous ?",o:[["Vous recadrez le débat sur les faits objectifs en gardant un calme olympien.","Athéna","Héra"],["Vous montez au créneau pour défendre une cause ou une personne vulnérable.","Artémis","Déméter"],["Vous absorbez les tensions et cherchez à maintenir l'harmonie de la pièce.","Hestia","Perséphone"],["Vous désamorcez la tension par le charme, l'humour ou un pas de côté.","Aphrodite","Perséphone"]]},
+  {id:14,m:"Déclaratif",t:"core",a:"Rapport au foyer",q:"Que représente votre lieu de vie pour vous ?",o:[["Un temple intérieur ordonné, paisible et ressourçant.","Hestia","Athéna"],["Un foyer chaleureux et accueillant où tout le monde aime se retrouver.","Déméter","Héra"],["Un camp de base fonctionnel entre deux projets ou explorations.","Artémis","Athéna"],["Un écrin esthétique qui reflète votre sensibilité et vos passions.","Aphrodite","Perséphone"]]},
+  {id:15,m:"Déclaratif",t:"core",a:"Motivation professionnelle",q:"Dans votre vie professionnelle, qu'est-ce qui vous motive le plus ?",o:[["Résoudre des problèmes complexes et bâtir des architectures intelligentes.","Athéna","Hestia"],["Accompagner, former, faire grandir et soutenir des équipes ou des talents.","Déméter","Héra"],["Relever des défis ambitieux en toute autonomie sans micro-management.","Artémis","Athéna"],["Créer, innover et insuffler une vision inspirante qui transforme les autres.","Aphrodite","Perséphone"]]},
+  {id:16,m:"Déclaratif",t:"core",a:"Rapport au changement",q:"Comment vivez-vous les grandes transitions de vie ?",o:[["Comme une mue naturelle : vous vous adaptez avec fluidité aux nouveaux mondes.","Perséphone","Aphrodite"],["Comme un nouveau territoire à conquérir avec détermination.","Artémis","Aphrodite"],["Vous les planifiez méthodiquement pour en maîtriser chaque paramètre.","Athéna","Héra"],["Vous prenez un temps de retrait silencieux pour intégrer le sens du changement.","Hestia","Déméter"]]},
+  {id:17,m:"Déclaratif",t:"core",a:"Sensibilité émotionnelle",q:"Comment gérez-vous vos émotions fortes ?",o:[["Vous les passez au filtre de la raison avant d'agir.","Athéna","Héra"],["Vous les vivez pleinement et les transformez en élan créatif ou relationnel.","Aphrodite","Perséphone"],["Vous les accueillez intérieurement dans le silence et la méditation.","Hestia","Perséphone"],["Vous les canalisez dans l'action physique, le mouvement ou l'engagement.","Artémis","Déméter"]]},
+  {id:18,m:"Déclaratif",t:"core",a:"Reconnaissance recherchée",q:"Quelle forme de reconnaissance vous touche le plus ?",o:[["Qu'on salue la justesse de votre jugement et votre compétence.","Athéna","Artémis"],["Qu'on honore votre loyauté, votre rang et ce que vous avez bâti ensemble.","Héra","Athéna"],["Qu'on vous remercie pour le soutien et la bienveillance apportés.","Déméter","Hestia"],["Qu'on soit inspiré ou transformé par votre énergie et vos créations.","Aphrodite","Perséphone"]]},
+  {id:19,m:"Déclaratif",t:"core",a:"Rapport au temps",q:"Quelle est votre relation spontanée au temps ?",o:[["Le temps long de la maturité, de la transmission et des cycles.","Déméter","Héra"],["L'intensité magnétique de l'instant présent.","Aphrodite","Artémis"],["L'optimisation stratégique du temps pour accomplir vos objectifs.","Athéna","Héra"],["Un temps fluide, sans horloge rigide, guidé par votre rythme intérieur.","Hestia","Perséphone"]]},
+  {id:20,m:"Déclaratif",t:"core",a:"Courage et risque",q:"Qu'est-ce qui vous donne le courage d'oser ?",o:[["La certitude d'avoir préparé votre stratégie dans les moindres détails.","Athéna","Héra"],["La défense d'une injustice ou d'une personne plus faible.","Artémis","Déméter"],["L'appel irrésistible du désir, de la beauté ou d'une idée neuve.","Aphrodite","Artémis"],["La confiance tranquille en votre intuition profonde.","Perséphone","Hestia"]]},
+  {id:21,m:"Déclaratif",t:"dilemme",a:"Rapport à l'autorité",q:"Face à une autorité illégitime ou abusive :",o:[["Vous démontez ses failles avec une précision chirurgicale.","Athéna","Artémis"],["Vous refusez frontalement de vous soumettre et tracez votre route.","Artémis","Héra"],["Vous protégez discrètement les personnes exposées à ses abus.","Déméter","Hestia"],["Vous contournez l'obstacle avec finesse sans gaspillage d'énergie.","Perséphone","Aphrodite"]]},
+  {id:22,m:"Déclaratif",t:"social",a:"Style de communication",q:"Comment vos proches décrivent-ils votre façon de parler ?",o:[["Claire, structurée, directe et pertinente.","Athéna","Artémis"],["Chaleureuse, enveloppante et attentive à chacun.","Déméter","Héra"],["Captivante, expressive, vivante et inspirante.","Aphrodite","Perséphone"],["Posée, mesurée, rare mais toujours juste.","Hestia","Athéna"]]},
+  {id:23,m:"Déclaratif",t:"core",a:"Rapport à la compétition",q:"Que vous inspire la compétition ?",o:[["Un terrain de jeu stimulant pour tester vos capacités et vous dépasser.","Artémis","Athéna"],["Un exercice stratégique où l'intelligence tactique fait la différence.","Athéna","Héra"],["Peu d'intérêt : vous préférez la coopération et le soin mutuel.","Déméter","Perséphone"],["Vous ne vous comparez à personne : vous suivez votre propre voie intérieure.","Hestia","Aphrodite"]]},
+  {id:24,m:"Déclaratif",t:"core",a:"Don de soi vs Préservation",q:"Où placez-vous le curseur entre vous et les autres ?",o:[["Vous veillez d'abord à préserver votre intégrité et votre autonomie.","Artémis","Hestia"],["Vous avez tendance à donner beaucoup, parfois jusqu'à l'épuisement.","Déméter","Perséphone"],["Vous cherchez un partenariat équilibré fondé sur la réciprocité.","Héra","Athéna"],["Vous rayonnez naturellement sans calcul dès que vous êtes alignée.","Aphrodite","Hestia"]]},
+  {id:25,m:"Déclaratif",t:"core",a:"Devise intérieure",q:"Quelle devise résume le mieux votre philosophie de vie ?",o:[["« Libre et indomptée. »","Artémis","Hestia"],["« La clarté d'esprit gouverne le monde. »","Athéna","Héra"],["« Ce que l'on aime et nourrit grandit. »","Déméter","Héra"],["« Tout ce qui touche l'âme se transforme. »","Aphrodite","Perséphone"]]},
+
+  {id:26,m:"Observation",t:"dilemme",a:"Dilemme à coût réel",q:"ARBITRAGE FORCÉ : Pour réussir un projet majeur, que sacrifiez-vous en premier ?",o:[["Le consensus du groupe pour trancher vite et efficacement.","Athéna","Artémis"],["Votre confort personnel pour soutenir et porter l'équipe.","Déméter","Héra"],["Le cadre établi pour explorer une voie créative inédite.","Aphrodite","Perséphone"],["La visibilité publique pour travailler dans le calme et l'autonomie.","Hestia","Artémis"]]},
+  {id:27,m:"Observation",t:"miroir",a:"Arrivée en soirée",q:"OBSERVATION : Lorsqu'elle entre dans une pièce pleine d'inconnus, que fait-elle ?",o:[["Elle observe l'ensemble avec calme depuis un point tranquille avant d'échanger.","Hestia","Perséphone"],["Elle capte naturellement les regards par sa présence et engage une conversation vivante.","Aphrodite","Héra"],["Elle repère immédiatement les personnes clés ou la structure du groupe.","Athéna","Artémis"],["Elle va spontanément vers la personne qui semble isolée pour la mettre à l'aise.","Déméter","Perséphone"]]},
+  {id:28,m:"Observation",t:"miroir",a:"Face à l'obstacle",q:"OBSERVATION : Quand une procédure bloque l'avancement d'un dossier :",o:[["Elle trouve immédiatement une solution tactique ou contourne le blocage.","Athéna","Artémis"],["Elle fonce résoudre le problème seule sans attendre d'autorisation.","Artémis","Athéna"],["Elle mobilise son réseau d'alliés pour débloquer la situation.","Héra","Aphrodite"],["Elle prend du recul et attend le moment opportun avec sérénité.","Hestia","Perséphone"]]},
+  {id:29,m:"Observation",t:"miroir",a:"Espace personnel",q:"INDICE MATÉRIEL : À quoi ressemble son bureau ou son intérieur ?",o:[["Épuré, harmonieux, silencieux, chaque objet a un sens précis.","Hestia","Athéna"],["Organisé avec rigueur, dossiers structurés, efficacité maximale.","Athéna","Héra"],["Sensuel, chaleureux, coloré, rempli d'objets inspirants et esthétiques.","Aphrodite","Perséphone"],["Accueillant, vivant, rempli de souvenirs partagés et de petites attentions.","Déméter","Héra"]]},
+  {id:30,m:"Observation",t:"dilemme",a:"Réflexe sous pression",q:"RÉFLEXE SOUS PRESSION : Un événement annule votre plan initial à la dernière minute :",o:[["Vous rebâtissez immédiatement un plan B logique en 3 étapes.","Athéna","Héra"],["Vous improvisez avec enthousiasme et transformez l'imprévu en aventure.","Artémis","Aphrodite"],["Vous veillez d'abord à ce que tout votre entourage soit rassuré et organisé.","Déméter","Héra"],["Vous savourez ce temps libéré pour vous recentrer au calme.","Hestia","Perséphone"]]},
+  {id:31,m:"Observation",t:"miroir",a:"Attaque injuste",q:"OBSERVATION : Quelqu'un critique publiquement une de ses amies ou collègues :",o:[["Elle intervient immédiatement avec fermeté pour défendre son amie.","Artémis","Déméter"],["Elle démonte l'argumentaire de l'attaquant avec une logique implacable.","Athéna","Héra"],["Elle console et soutient son amie en privé avec une grande bienveillance.","Déméter","Perséphone"],["Elle retourne la situation avec finesse et élégance sans perdre son calme.","Aphrodite","Hestia"]]},
+  {id:32,m:"Observation",t:"miroir",a:"Allure et style",q:"INDICE VISUEL : Quelle signature dégage spontanément son allure ?",o:[["Élégance structurée, allure souveraine et tenue impeccable.","Héra","Athéna"],["Pratique, libre de mouvement, dynamique et naturelle.","Artémis","Athéna"],["Sensuelle, créative, expressive, attentive aux matières et aux couleurs.","Aphrodite","Perséphone"],["Sobre, intemporelle, discrète et confortable.","Hestia","Déméter"]]},
+  {id:33,m:"Observation",t:"dilemme",a:"Dilemme à coût réel",q:"ARBITRAGE FORCÉ : Vous devez renoncer à l'un de ces 4 éléments pendant 3 ans :",o:[["La reconnaissance officielle de votre statut ou de votre titre.","Artémis","Hestia"],["La possibilité de décider seule de vos horaires et déplacements.","Héra","Déméter"],["Les moments d'intimité créative, artistique ou passionnelle.","Athéna","Hestia"],["La proximité quotidienne avec votre cercle familial ou affectif.","Artémis","Athéna"]]},
+  {id:34,m:"Observation",t:"miroir",a:"Prise de parole en réunion",q:"OBSERVATION : Comment intervient-elle dans une réunion stratégique ?",o:[["Elle synthétise les enjeux et propose la décision la plus rationnelle.","Athéna","Héra"],["Elle défend avec passion une idée nouvelle qui bouscule les habitudes.","Aphrodite","Artémis"],["Elle veille à ce que chacun ait pu s'exprimer et que l'alliance tienne.","Déméter","Héra"],["Elle parle peu, mais sa remarque finale recentre toute la salle.","Hestia","Perséphone"]]},
+  {id:35,m:"Observation",t:"miroir",a:"Décodage de style",q:"OBSERVATION INDIRECTE : Comment passe-t-elle un questionnaire comme celui-ci ?",o:[["Elle analyse la logique des questions et cherche le modèle sous-jacent.","Athéna","Hestia"],["Elle répond à l'intuition en se laissant guider par ce qu'elle ressent sur le moment.","Perséphone","Aphrodite"],["Elle choisit rapidement les options qui préservent sa liberté d'action.","Artémis","Athéna"],["Elle pense à l'impact de ses choix sur ses relations et son entourage.","Déméter","Héra"]]},
+  {id:36,m:"Observation",t:"obs_gen",a:"Gestion d'un budget",q:"OBSERVATION : Comment utilise-t-elle un budget libre ou un gain inattendu ?",o:[["Elle investit dans un projet stratégique ou une formation pointue.","Athéna","Héra"],["Elle s'offre un voyage d'exploration, un défi sportif ou du matériel.","Artémis","Perséphone"],["Elle fait plaisir à ses proches ou améliore le confort du foyer.","Déméter","Héra"],["Elle s'offre une œuvre, une expérience esthétique ou un moment d'exception.","Aphrodite","Hestia"]]},
+  {id:37,m:"Observation",t:"obs_gen",a:"Attitude en voyage",q:"OBSERVATION : En voyage à l'étranger, quel est son réflexe dominant ?",o:[["Explorer hors des sentiers battus, marcher des heures, découvrir par elle-même.","Artémis","Perséphone"],["S'immerger dans l'art, la gastronomie, les rencontres et l'atmosphère locale.","Aphrodite","Perséphone"],["Organiser un itinéraire optimisé pour voir l'essentiel sans perte de temps.","Athéna","Héra"],["Trouver un lieu paisible et inspirant pour lire, observer et se ressourcer.","Hestia","Déméter"]]},
+  {id:38,m:"Observation",t:"miroir",a:"Écoute d'un proche",q:"OBSERVATION : Un proche vient lui confier un problème personnel lourd :",o:[["Elle l'écoute avec une empathie totale, le nourrit et le réconforte.","Déméter","Héra"],["Elle l'aide immédiatement à structurer un plan d'action concret pour s'en sortir.","Athéna","Artémis"],["Elle capte ce qu'il n'ose pas dire et l'aide à comprendre ses émotions cachées.","Perséphone","Aphrodite"],["Elle lui offre un espace calme et sans jugement pour qu'il retrouve sa paix.","Hestia","Déméter"]]},
+  {id:39,m:"Observation",t:"dilemme",a:"Dilemme à coût réel",q:"ARBITRAGE FORCÉ : Face à un compromis professionnel très lucratif mais contraire à vos valeurs :",o:[["Vous refusez net : votre intégrité et votre liberté ne s'achètent pas.","Artémis","Hestia"],["Vous négociez froidement les clauses pour garder le contrôle total.","Athéna","Héra"],["Vous refusez si cela nuit à vos proches ou à votre équilibre intérieur.","Déméter","Hestia"],["Vous acceptez uniquement si le projet nourrit votre passion créative.","Aphrodite","Perséphone"]]},
+  {id:40,m:"Observation",t:"obs_gen",a:"Indice de concentration",q:"OBSERVATION : À quoi voit-on qu'elle est totalement absorbée par une tâche ?",o:[["Elle oublie l'heure, le bruit extérieur et entre dans une bulle silencieuse.","Hestia","Perséphone"],["Elle est dans une effervescence créative intense et enthousiaste.","Aphrodite","Perséphone"],["Elle avance avec une précision méthodique et une efficacité redoutable.","Athéna","Héra"],["Elle mobilise son énergie avec détermination jusqu'à franchir la ligne d'arrivée.","Artémis","Athéna"]]},
+  {id:41,m:"Observation",t:"dilemme",a:"Rapport à la foule",q:"OBSERVATION : Dans un grand événement professionnel ou mondain :",o:[["Elle va droit vers les décideurs et noue des alliances stratégiques.","Athéna","Héra"],["Elle rayonne au cœur des échanges et crée des connexions spontanées.","Aphrodite","Artémis"],["Elle s'éclipse dès qu'elle le peut pour retrouver le calme.","Hestia","Perséphone"],["Elle reste fidèle à son petit cercle et veille sur son partenaire ou ses proches.","Héra","Déméter"]]},
+  {id:42,m:"Observation",t:"miroir",a:"Première impression",q:"MIROIR SOCIAL : Comment les autres la décrivent-ils après une première rencontre ?",o:[["Vive, brillante, structurée, quelqu'un qui sait exactement où elle va.","Athéna","Héra"],["Magnétique, solaire, créative, dotée d'une énergie mémorable.","Aphrodite","Artémis"],["Indépendante, franche, directe, impossible à enfermer dans une case.","Artémis","Athéna"],["Douce, profonde, apaisante et dotée d'une grande écoute.","Hestia","Perséphone"]]},
+  {id:43,m:"Observation",t:"obs_gen",a:"Gestion de l'erreur",q:"OBSERVATION : Un collaborateur ou proche commet une erreur évitable :",o:[["Elle analyse froidement la cause pour éviter que cela ne se reproduise.","Athéna","Hestia"],["Elle pardonne facilement et l'aide à réparer sans l'humilier.","Déméter","Hestia"],["Elle est exigeante et rappelle fermement les engagements pris.","Héra","Artémis"],["Elle comprend immédiatement la fragilité émotionnelle derrière l'erreur.","Perséphone","Aphrodite"]]},
+  {id:44,m:"Observation",t:"dilemme",a:"Dilemme à coût réel",q:"ARBITRAGE FORCÉ : On vous offre le choix entre 4 pouvoirs :",o:[["Lire instantanément les intentions et émotions cachées des gens.","Perséphone","Hestia"],["Ne jamais dépendre de personne sur aucun plan.","Artémis","Hestia"],["Avoir toujours un coup d'avance stratégique dans n'importe quelle négociation.","Athéna","Héra"],["Inspirer et transformer positivement chaque personne que vous croisez.","Aphrodite","Déméter"]]},
+  {id:45,m:"Observation",t:"miroir",a:"Vacances idéales",q:"OBSERVATION : Comment organise-t-elle ses vacances idéales ?",o:[["Un mélange de sport, de nature sauvage et de liberté sans horaires.","Artémis","Aphrodite"],["Un lieu inspirant alliant art, beauté, gastronomie et rencontres.","Aphrodite","Perséphone"],["Une grande maison conviviale réunissant famille et amis proches.","Déméter","Héra"],["Une retraite paisible loin de l'agitation pour lire et se ressourcer.","Hestia","Athéna"]]},
+  {id:46,m:"Observation",t:"dilemme",a:"Réaction face à la lenteur",q:"OBSERVATION : Coincée dans une file d'attente ou un retard interminable :",o:[["Elle optimise son temps sur son téléphone ou structure ses prochains dossiers.","Athéna","Héra"],["Elle engage la conversation avec son voisin avec naturel et chaleur.","Aphrodite","Déméter"],["Elle reste parfaitement sereine, centrée et patiente.","Hestia","Perséphone"],["Elle cherche immédiatement une alternative plus rapide pour sortir de la file.","Artémis","Athéna"]]},
+  {id:47,m:"Observation",t:"dilemme",a:"Réflexe sous pression",q:"RÉFLEXE SOUS PRESSION : Votre équipe remporte un grand succès grâce à vous :",o:[["Vous mettez en lumière ceux qui ont contribué et célébrez l'union.","Déméter","Héra"],["Vous savourez l'instant avec joie et enthousiasme communicatif.","Aphrodite","Artémis"],["Vous passez déjà mentalement au prochain objectif stratégique.","Athéna","Artémis"],["Vous restez discrète, satisfaite intérieurement du travail accompli.","Hestia","Perséphone"]]},
+  {id:48,m:"Observation",t:"obs_gen",a:"Style de transmission",q:"OBSERVATION : Quand elle explique une idée complexe :",o:[["Elle utilise une image poétique ou une expérience vécue qui touche l'intuition.","Perséphone","Aphrodite"],["Elle structure son propos en 3 points clairs, logiques et actionnables.","Athéna","Héra"],["Elle s'adapte avec patience au rythme de compréhension de son interlocuteur.","Déméter","Hestia"],["Elle va droit à l'essentiel sans fioritures inutiles.","Artémis","Athéna"]]},
+  {id:49,m:"Observation",t:"dilemme",a:"Indice de saturation",q:"OBSERVATION : À quel signe précis voit-on qu'elle est saturée ?",o:[["Elle coupe le téléphone et s'isole dans le silence complet.","Hestia","Artémis"],["Elle devient hyper-rationnelle, sèche et tranchante.","Athéna","Héra"],["Elle se sent submergée par les émotions des autres et manque d'énergie.","Perséphone","Déméter"],["Elle ressent un besoin urgent de grand air, de mouvement ou de rupture.","Artémis","Aphrodite"]]},
+  {id:50,m:"Observation",t:"dilemme",a:"Choix final d'observation",q:"TEST ULTIMATUM : Quelle empreinte laisse-t-elle naturellement derrière elle ?",o:[["La clarté, l'intelligence stratégique et la maîtrise.","Athéna","Hestia"],["La liberté, le courage et le refus des compromissions.","Artémis","Athéna"],["La chaleur humaine, la loyauté et le sentiment d'être protégé.","Déméter","Héra"],["La beauté, l'inspiration et l'élan vital.","Aphrodite","Perséphone"]]}
+];
+
+let state = {
+  universe: '12',
+  mode: 'decl',
+  questions: [],
+  idx: 0,
+  scores: {},
+  timerId: null,
+  timeLeft: 10,
+  duoSaved: null,
+  lastScores: null
+};
+
+function shuffleArray(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function getLastUsedIds(univ, mode) {
+  try {
+    const raw = localStorage.getItem(`arch_last_${univ}_${mode}`);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) { return []; }
+}
+
+function saveLastUsedIds(univ, mode, ids) {
+  try {
+    localStorage.setItem(`arch_last_${univ}_${mode}`, JSON.stringify(ids));
+  } catch (e) {}
+}
+
+function sampleStratified(pool, count, excludeIds) {
+  let fresh = pool.filter(q => !excludeIds.includes(q.id));
+  let fallback = pool.filter(q => excludeIds.includes(q.id));
+  fresh = shuffleArray(fresh);
+  fallback = shuffleArray(fallback);
+
+  const selected = [];
+  const usedAxes = new Set();
+
+  // Pass 1: maximize axis diversity from fresh questions
+  for (const q of fresh) {
+    if (selected.length >= count) break;
+    if (!usedAxes.has(q.a)) {
+      selected.push(q);
+      usedAxes.add(q.a);
+    }
+  }
+  // Pass 2: fill remaining from fresh questions
+  for (const q of fresh) {
+    if (selected.length >= count) break;
+    if (!selected.some(s => s.id === q.id)) selected.push(q);
+  }
+  // Pass 3: if pool was smaller than count + excludeIds, fill from fallback
+  for (const q of fallback) {
+    if (selected.length >= count) break;
+    if (!selected.some(s => s.id === q.id)) selected.push(q);
+  }
+  return shuffleArray(selected);
+}
+
+function drawQuestions(univ, mode) {
+  const bank = univ === '12' ? BANK_12 : BANK_7;
+  const lastIds = getLastUsedIds(univ, mode);
+  let chosen = [];
+
+  if (mode === 'decl') {
+    chosen = sampleStratified(bank.filter(q => q.m === 'Déclaratif'), 10, lastIds);
+  } else if (mode === 'obs') {
+    chosen = sampleStratified(bank.filter(q => q.m === 'Observation'), 10, lastIds);
+  } else if (mode === 'mix') {
+    const partDecl = sampleStratified(bank.filter(q => q.m === 'Déclaratif'), 5, lastIds);
+    const partObs = sampleStratified(bank.filter(q => q.m === 'Observation'), 5, lastIds);
+    chosen = shuffleArray([...partDecl, ...partObs]);
+  } else if (mode === 'dilemme') {
+    chosen = sampleStratified(bank.filter(q => q.t === 'dilemme'), 10, lastIds);
+  } else if (mode === 'miroir') {
+    chosen = sampleStratified(bank.filter(q => q.t === 'miroir'), 10, lastIds);
+  } else {
+    chosen = sampleStratified(bank, 10, lastIds);
+  }
+
+  saveLastUsedIds(univ, mode, chosen.map(q => q.id));
+  return chosen;
+}
+
+function setUniverse(u) {
+  state.universe = u;
+  document.getElementById('btnUniv12').classList.toggle('active', u === '12');
+  document.getElementById('btnUniv7').classList.toggle('active', u === '7');
+  document.body.classList.toggle('theme-women', u === '7');
+  if (state.duoSaved && state.duoSaved.universe !== u) {
+    clearDuo();
+  }
+}
+
+function selectMode(m) {
+  state.mode = m;
+  document.querySelectorAll('.mode-card').forEach(el => {
+    el.classList.toggle('active', el.dataset.mode === m);
+  });
+}
+
+function startQuiz() {
+  const meta = state.universe === '12' ? META_12 : META_7;
+  state.scores = {};
+  Object.keys(meta).forEach(k => state.scores[k] = 0);
+  state.questions = drawQuestions(state.universe, state.mode);
+  state.idx = 0;
+
+  document.getElementById('viewHome').classList.add('hidden');
+  document.getElementById('viewResult').classList.add('hidden');
+  document.getElementById('viewQuiz').classList.remove('hidden');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  clearInterval(state.timerId);
+  const q = state.questions[state.idx];
+  document.getElementById('qCounter').textContent = `Question ${state.idx + 1} / 10`;
+  document.getElementById('qModeBadge').textContent = q.m;
+  document.getElementById('qAxis').textContent = q.a;
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('progressFill').style.width = `${((state.idx + 1) / 10) * 100}%`;
+
+  const letters = ['A', 'B', 'C', 'D'];
+  const shuffledOpts = shuffleArray(q.o);
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+
+  shuffledOpts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<div class="opt-letter">${letters[i]}</div><div class="opt-label">${opt[0]}</div>`;
+    btn.onclick = () => chooseOption(opt[1], opt[2]);
+    container.appendChild(btn);
+  });
+
+  const useTimer = document.getElementById('timerToggle').checked;
+  const timerEl = document.getElementById('timerDisplay');
+  if (useTimer) {
+    timerEl.classList.remove('hidden', 'urgent');
+    state.timeLeft = 10;
+    timerEl.textContent = '10s';
+    state.timerId = setInterval(() => {
+      state.timeLeft--;
+      timerEl.textContent = `${state.timeLeft}s`;
+      if (state.timeLeft <= 3) timerEl.classList.add('urgent');
+      if (state.timeLeft <= 0) {
+        clearInterval(state.timerId);
+        const randOpt = shuffledOpts[Math.floor(Math.random() * shuffledOpts.length)];
+        chooseOption(randOpt[1], randOpt[2]);
+      }
+    }, 1000);
+  } else {
+    timerEl.classList.add('hidden');
+  }
+}
+
+function chooseOption(primary, secondary) {
+  clearInterval(state.timerId);
+  if (state.scores[primary] !== undefined) state.scores[primary] += 2;
+  if (state.scores[secondary] !== undefined) state.scores[secondary] += 1;
+
+  state.idx++;
+  if (state.idx < 10) {
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function abortQuiz() {
+  clearInterval(state.timerId);
+  goHome();
+}
+
+function showResults() {
+  document.getElementById('viewQuiz').classList.add('hidden');
+  document.getElementById('viewResult').classList.remove('hidden');
+
+  const meta = state.universe === '12' ? META_12 : META_7;
+  const sorted = Object.entries(state.scores).sort((a, b) => b[1] - a[1]);
+  const top1 = sorted[0][0];
+  const top2 = sorted[1][0];
+  const subj = document.getElementById('subjectName').value.trim() || 'Profil';
+  const modeLabel = document.querySelector(`.mode-card[data-mode="${state.mode}"] .mode-title`).textContent;
+
+  state.lastScores = { ...state.scores };
+
+  document.getElementById('resSubject').textContent = `${subj} • ${modeLabel}`;
+  document.getElementById('resSignature').textContent = `${meta[top1].full} — ${meta[top2].full}`;
+  document.getElementById('resSummary').innerHTML =
+    `<strong>Moteur :</strong> ${meta[top1].motor}<br><strong>Ombre :</strong> ${meta[top1].shadow}`;
+
+  const duoDiag = document.getElementById('duoDiagnostic');
+  if (state.duoSaved && state.duoSaved.universe === state.universe) {
+    const prevSorted = Object.entries(state.duoSaved.scores).sort((a, b) => b[1] - a[1]);
+    const p1 = prevSorted[0][0];
+    const p2 = prevSorted[1][0];
+    const aligned = (p1 === top1);
+    duoDiag.classList.remove('hidden');
+    duoDiag.innerHTML =
+      `<strong>Diagnostic Duo (Profil 1 vs Profil 2) :</strong><br>` +
+      `• Passage 1 (${state.duoSaved.modeLabel}) : <strong>${meta[p1].full} — ${meta[p2].full}</strong><br>` +
+      `• Passage 2 (${modeLabel}) : <strong>${meta[top1].full} — ${meta[top2].full}</strong><br>` +
+      (aligned
+        ? `Alignement fort : la posture perçue correspond directement au moteur dominant.`
+        : `Décalage révélé : le moteur <em>${meta[p1].full}</em> s'exprime à travers la posture <em>${meta[top1].full}</em>.`);
+  } else {
+    duoDiag.classList.add('hidden');
+  }
+
+  const listEl = document.getElementById('rankingList');
+  listEl.innerHTML = '';
+  sorted.forEach(([key, val], i) => {
+    const row = document.createElement('div');
+    row.className = 'rank-item';
+    row.innerHTML = `
+      <div class="rank-left">
+        <div class="rank-num ${i < 2 ? 'top' : ''}">${i + 1}</div>
+        <div>
+          <div class="rank-name">${meta[key].full}</div>
+          <div class="rank-desc">${meta[key].motor}</div>
+        </div>
+      </div>
+      <div class="rank-score">${val} pts</div>
+    `;
+    listEl.appendChild(row);
+  });
+
+  drawRadar(Object.keys(meta), state.scores, state.duoSaved ? state.duoSaved.scores : null);
+}
+
+function drawRadar(keys, scoresA, scoresB) {
+  const canvas = document.getElementById('radarCanvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const size = 340;
+  canvas.width = size * dpr;
+  canvas.height = size * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, size, size);
+
+  const cx = size / 2;
+  const cy = size / 2;
+  const maxR = 112;
+  const n = keys.length;
+  const allVals = [...Object.values(scoresA), ...(scoresB ? Object.values(scoresB) : [])];
+  const maxVal = Math.max(8, ...allVals);
+
+  const accent = getComputedStyle(document.body).getPropertyValue('--accent').trim();
+  const accent2 = getComputedStyle(document.body).getPropertyValue('--accent-2').trim();
+
+  // Concentric polygons
+  ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+  ctx.lineWidth = 1;
+  for (let step = 1; step <= 4; step++) {
+    const r = (maxR / 4) * step;
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+      const ang = (Math.PI * 2 * i) / n - Math.PI / 2;
+      const x = cx + r * Math.cos(ang);
+      const y = cy + r * Math.sin(ang);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  // Axes & labels
+  ctx.font = '600 10.5px -apple-system, sans-serif';
+  ctx.fillStyle = '#e2e8f0';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  for (let i = 0; i < n; i++) {
+    const ang = (Math.PI * 2 * i) / n - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + maxR * Math.cos(ang), cy + maxR * Math.sin(ang));
+    ctx.stroke();
+
+    const lx = cx + (maxR + 28) * Math.cos(ang);
+    const ly = cy + (maxR + 28) * Math.sin(ang);
+    ctx.fillText(keys[i], lx, ly);
+  }
+
+  function plotSeries(scores, strokeCol, fillCol) {
+    ctx.beginPath();
+    keys.forEach((k, i) => {
+      const v = scores[k] || 0;
+      const r = (v / maxVal) * maxR;
+      const ang = (Math.PI * 2 * i) / n - Math.PI / 2;
+      const x = cx + r * Math.cos(ang);
+      const y = cy + r * Math.sin(ang);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.closePath();
+    ctx.fillStyle = fillCol;
+    ctx.fill();
+    ctx.strokeStyle = strokeCol;
+    ctx.lineWidth = 2.2;
+    ctx.stroke();
+  }
+
+  if (scoresB) {
+    plotSeries(scoresB, accent2, 'rgba(96, 165, 250, 0.20)');
+  }
+  plotSeries(scoresA, accent, 'rgba(212, 163, 115, 0.30)');
+}
+
+function prepareDuoCompare() {
+  const modeLabel = document.querySelector(`.mode-card[data-mode="${state.mode}"] .mode-title`).textContent;
+  state.duoSaved = {
+    universe: state.universe,
+    modeLabel: modeLabel,
+    scores: { ...state.lastScores }
+  };
+  document.getElementById('duoIndicator').textContent = 'Mode Duo Actif';
+  const box = document.getElementById('duoSavedBox');
+  box.classList.remove('hidden');
+  box.innerHTML = `<strong>Profil 1 mémorisé (${modeLabel}).</strong> Choisissez maintenant un second mode (ex. <em>Observation Pure</em> ou <em>Miroir Social</em>) et lancez la session pour superposer les deux radars.`;
+  document.getElementById('clearDuoBtn').classList.remove('hidden');
+
+  if (state.mode === 'decl') selectMode('obs');
+  goHome();
+}
+
+function clearDuo() {
+  state.duoSaved = null;
+  document.getElementById('duoIndicator').textContent = 'Solo';
+  document.getElementById('duoSavedBox').classList.add('hidden');
+  document.getElementById('clearDuoBtn').classList.add('hidden');
+}
+
+function goHome() {
+  document.getElementById('viewQuiz').classList.add('hidden');
+  document.getElementById('viewResult').classList.add('hidden');
+  document.getElementById('viewHome').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
