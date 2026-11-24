@@ -252,7 +252,7 @@ const repPromise = ctx.drawRep(rrr);
   ok(ids.length >= 18 && used.length >= 15 && used.every(u => ids.includes(u)), 'icônes : chaque icône utilisée existe dans le sprite (' + used.length + ' emplois, ' + ids.length + ' icônes)');
   const bands = [...landingHtml.matchAll(/<section class="land-sec( paper)?/g)].map(m => !!m[1]);
   ok(bands.length === 5 && bands.every((p, i) => i === 0 ? p : p !== bands[i - 1]), 'accueil : les bandes alternent crème et bleu nuit');
-  ok(/\.paper \{[^}]*--text: #0f2a2e/.test(html) && /class="card paper"/.test(html) && !/classList\.toggle\('paper'/.test(html), 'alternance : surfaces crème sur les autres pages, la carte de question reste en bleu nuit');
+  ok(/\.paper \{[^}]*--text: #1c2846/.test(html) && /class="card paper"/.test(html) && !/classList\.toggle\('paper'/.test(html), 'alternance : surfaces crème sur les autres pages, la carte de question reste en bleu nuit');
 }
 
 // 5. PWA : fichiers et cohérence des versions
